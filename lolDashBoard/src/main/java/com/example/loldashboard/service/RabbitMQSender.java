@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.example.loldashboard.model.ChampionData;
+import com.example.loldashboard.model.FeaturedGames;
 
 @Service
 public class RabbitMQSender {
@@ -18,9 +18,9 @@ public class RabbitMQSender {
 	@Value("${routingkey}")
 	private String routingkey;
 
-	public void send(ChampionData championData) {
-		rabbitTemplate.convertAndSend(exchange, routingkey, championData);
-		System.out.println("Send msg = " + championData);
+	public void send(FeaturedGames featuredGames) {
+		rabbitTemplate.convertAndSend(exchange, routingkey, featuredGames);
+		System.out.println("Send msg = " + featuredGames);
 
 	}
 }

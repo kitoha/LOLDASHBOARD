@@ -7,21 +7,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
+@Component
 @Data
 public class ApiRequester {
 	private String region;
 	private String apiUri;
 	private ArrayList<String> params;
 	private String key;
+	private int responsCode;
 
 	public ApiRequester() {
 		this.region = "";
-		this.key = "RGAPI-828f4999-366b-4c78-9a79-a7ac18b0d265";
+		this.key = "RGAPI-a45ade7c-070f-418a-971a-681c95933324";
 		this.apiUri = "";
 		this.params = new ArrayList<>();
+		this.responsCode = 0;
 	}
 
 	public String requesGet() throws Exception {
@@ -38,7 +43,7 @@ public class ApiRequester {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		int responsCode = con.getResponseCode();
+		this.responsCode = con.getResponseCode();
 
 		BufferedReader br;
 		if (responsCode == 200) {
