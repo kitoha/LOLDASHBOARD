@@ -12,5 +12,5 @@ public class ChampionData {
 	private String gameMode;
 	private String mapId;
 	private String gameType;
-	private List<participant> participants;
+	private List<Participant> participants;
 }

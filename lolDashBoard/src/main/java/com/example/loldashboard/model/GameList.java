@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class GameList {
+	List<Participant> participants;
 	private String gameId;
 	private String gameStartTime;
 	private String platformId;
@@ -13,6 +14,5 @@ public class GameList {
 	private String mapId;
 	private String gameType;
 	private String gameQueueConfigId;
-	List<Participant> participants;
 
 }
