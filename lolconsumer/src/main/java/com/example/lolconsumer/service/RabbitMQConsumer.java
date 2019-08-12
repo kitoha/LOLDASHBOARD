@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import com.example.lolconsumer.model.ChampionData;
+import com.example.lolconsumer.model.FeaturedGames;
 
 @Component
 public class RabbitMQConsumer {
@@ -15,10 +16,10 @@ public class RabbitMQConsumer {
 	RedisTemplate<String, Object> redisTemplate;
 
 	@RabbitListener(queues = "${queuename}")
-	public void consumer(ChampionData championData) {
-		System.out.println("Received : " + championData.getParticipants().get(1).getChampionId());
+	public void consumer(FeaturedGames featuredGames) {
+		System.out.println("Received : " + featuredGames.getGameList());
 		ValueOperations<String,Object> valueOperations = redisTemplate.opsForValue();
+		valueOperations.set("test7",featuredGames);
 
-		valueOperations.set("test2",championData);
 	}
 }

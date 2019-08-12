@@ -23,7 +23,7 @@ public class ApiRequester {
 
 	public ApiRequester() {
 		this.region = "";
-		this.key = "RGAPI-a45ade7c-070f-418a-971a-681c95933324";
+		this.key = "RGAPI-38335d02-df96-41e1-8514-a2b8ae6a07a7";
 		this.apiUri = "";
 		this.params = new ArrayList<>();
 		this.responsCode = 0;

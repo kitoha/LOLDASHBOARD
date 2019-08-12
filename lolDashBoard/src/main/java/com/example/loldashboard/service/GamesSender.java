@@ -39,9 +39,10 @@ public class GamesSender {
 			throw new GameListException(responseCodeChecker.getMessage());
 		}
 
-		System.out.println("result : " + responseCode);
+		System.out.println("result : " + this.result);
 
-		FeaturedGames featuredGames = objectMapper.readValue(result, FeaturedGames.class);
-		//rabbitMQSender.send(featuredGames);
+		FeaturedGames featuredGames = objectMapper.readValue(this.result, FeaturedGames.class);
+
+		rabbitMQSender.send(featuredGames);
 	}
 }
