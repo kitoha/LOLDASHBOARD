@@ -24,7 +24,7 @@ public class GamesSender {
 
 	private String result;
 
-	@Scheduled(fixedDelay = 1000)
+	@Scheduled(fixedDelay = 30000)
 	public void scheduleFixedRateTask() throws Exception {
 
 		ObjectMapper objectMapper = new ObjectMapper();

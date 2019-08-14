@@ -9,6 +9,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.example.lolconsumer.model.ChampionData;
+import com.example.lolconsumer.model.FeaturedGames;
 
 @Configuration
 public class RedisConfiguration {
@@ -26,7 +27,7 @@ public class RedisConfiguration {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(redisConnectionFactory());
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChampionData.class));
+		redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(FeaturedGames.class));
 		return redisTemplate;
 	}
 }
