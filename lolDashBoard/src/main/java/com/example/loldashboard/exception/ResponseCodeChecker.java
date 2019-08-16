@@ -1,11 +1,8 @@
 package com.example.loldashboard.exception;
 
-import org.springframework.stereotype.Component;
-
 import lombok.Data;
 
 @Data
-@Component
 public class ResponseCodeChecker {
 	private int responsCode;
 	private String message;

@@ -4,34 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.example.loldashboard.configuration.RegionName;
+import com.example.loldashboard.configuration.EnumConfiguration;
+import com.example.loldashboard.configuration.ObjectMapperConfiguration;
+import com.example.loldashboard.dto.model.FeaturedGames;
 import com.example.loldashboard.exception.GameListException;
 import com.example.loldashboard.exception.ResponseCodeChecker;
-import com.example.loldashboard.model.FeaturedGames;
 import com.example.loldashboard.request.ApiRequester;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class GamesSender {
 	@Autowired
 	RabbitMQSender rabbitMQSender;
-	@Autowired
-	private ApiRequester apiRequester;
 
 	@Autowired
-	private ResponseCodeChecker responseCodeChecker;
-
-	private String result;
+	ObjectMapperConfiguration objectMapperConfiguration;
 
 	@Scheduled(fixedDelay = 30000)
 	public void scheduleFixedRateTask() throws Exception {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		apiRequester.setRegion(RegionName.Korea);
+		String result;
+		ApiRequester apiRequester = new ApiRequester();
+		ResponseCodeChecker responseCodeChecker = new ResponseCodeChecker();
+		apiRequester.setRegion(EnumConfiguration.regionTypeName.Korea.getValue());
 		apiRequester.setApiUri("/lol/spectator/v4/featured-games");
-		this.result = apiRequester.requesGet();
+		result = apiRequester.requesGet();
 		int responseCode = apiRequester.getResponsCode();
 		responseCodeChecker.setResponsCode(responseCode);
 
@@ -39,10 +36,9 @@ public class GamesSender {
 			throw new GameListException(responseCodeChecker.getMessage());
 		}
 
-		System.out.println("result : " + this.result);
-
-		FeaturedGames featuredGames = objectMapper.readValue(this.result, FeaturedGames.class);
-
+		log.info("result : " + result);
+		FeaturedGames featuredGames = this.objectMapperConfiguration.objectMapper.readValue(result,
+			FeaturedGames.class);
 		rabbitMQSender.send(featuredGames);
 	}
 }

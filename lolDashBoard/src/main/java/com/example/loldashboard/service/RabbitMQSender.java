@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.example.loldashboard.model.FeaturedGames;
+import com.example.loldashboard.dto.model.FeaturedGames;
 
 @Service
 public class RabbitMQSender {

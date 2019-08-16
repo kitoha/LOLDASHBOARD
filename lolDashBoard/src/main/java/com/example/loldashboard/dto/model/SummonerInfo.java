@@ -1,4 +1,4 @@
-package com.example.webserver.model;
+package com.example.loldashboard.dto.model;
 
 import lombok.Data;
 

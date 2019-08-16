@@ -1,4 +1,4 @@
-package com.example.loldashboard.model;
+package com.example.lolconsumer.dto.model;
 
 import java.util.List;
 

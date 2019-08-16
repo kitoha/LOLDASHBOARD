@@ -1,4 +1,4 @@
-package com.example.loldashboard.model;
+package com.example.loldashboard.dto.model;
 
 import lombok.Data;
 

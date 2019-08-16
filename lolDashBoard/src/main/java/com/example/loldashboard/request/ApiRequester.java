@@ -7,41 +7,39 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.loldashboard.dto.model.ParameterPair;
 import lombok.Data;
 
-@Component
 @Data
 public class ApiRequester {
 	private String region;
 	private String apiUri;
-	private ArrayList<String> params;
+	private ArrayList<ParameterPair> params;
 	private String key;
+	private String pathParmeters;
 	private int responsCode;
 
 	public ApiRequester() {
 		this.region = "";
-		this.key = "RGAPI-9500ad79-eb0b-4c61-85a5-318d2767517a";
+		this.key = "RGAPI-c1a53618-ff4f-4cc8-82ed-15295cf8097e";
 		this.apiUri = "";
 		this.params = new ArrayList<>();
 		this.responsCode = 0;
+		this.pathParmeters = "";
 	}
 
 	public String requesGet() throws Exception {
-		String urlString = "https://" + this.region + ".api.riotgames.com" + this.apiUri;
-		for (String param : this.params) {
-			urlString += "/" + param;
+		StringBuilder urlString = new StringBuilder();
+		urlString.append("https://" + this.region + ".api.riotgames.com" + this.apiUri
+			+ this.pathParmeters);
+		urlString.append("?" + "api_key=" + this.key);
+		for (ParameterPair param : this.params) {
+			urlString.append("&" + param.getName() + "=" + param.getData());
 		}
 
-		urlString += "?api_key=" + this.key;
-
-		URL url = new URL(urlString);
+		URL url = new URL(urlString.toString());
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("GET");
-
-		ObjectMapper objectMapper = new ObjectMapper();
 
 		this.responsCode = con.getResponseCode();
 

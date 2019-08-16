@@ -1,21 +1,19 @@
 package com.example.lolconsumer.service;
 
-import java.util.List;
-
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
-import com.example.lolconsumer.configuration.GameTypName;
-import com.example.lolconsumer.model.ChampionData;
-import com.example.lolconsumer.model.FeaturedGames;
-import com.example.lolconsumer.model.GameList;
+import com.example.lolconsumer.configuration.EnumConfiguration;
+import com.example.lolconsumer.dto.model.FeaturedGames;
+import com.example.lolconsumer.dto.model.GameList;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
-public class RabbitMQConsumer {
+public class RabbitMqConsumer {
 
 	@Autowired
 	RedisTemplate<String,Object> redisTemplate;
@@ -29,16 +27,16 @@ public class RabbitMQConsumer {
 			String gamemode = gameList.getGameMode();
 			if(gamemode.equals("CLASSIC")) {
 				String configId = gameList.getGameQueueConfigId();
-				if (configId.equals(GameTypName.soloRank) ) {
-					System.out.println("5v5 Ranked Solo games");
-					zSetOperations.add(GameTypName.soloRank,gameList.getParticipants(),gameStartTime);
-				} else if (configId.equals(GameTypName.normalGame)) {
-					System.out.println("5v5 Blind Pick games");
-					zSetOperations.add(GameTypName.soloRank,gameList.getParticipants(),gameStartTime);
+				if (configId.equals(EnumConfiguration.gameTypeName.soloRank.getValue())) {
+					log.info("5v5 Ranked Solo games");
+					zSetOperations.add(EnumConfiguration.gameTypeName.soloRank.getValue(),gameList.getParticipants(),gameStartTime);
+				} else if (configId.equals(EnumConfiguration.gameTypeName.normalGame.getValue())) {
+					log.info("5v5 Blind Pick games");
+					zSetOperations.add(EnumConfiguration.gameTypeName.normalGame.getValue(),gameList.getParticipants(),gameStartTime);
 				}
 			}
 			else{
-				System.out.println("It is ARAM!");
+				log.info("It is ARAM!");
 			}
 		}
 

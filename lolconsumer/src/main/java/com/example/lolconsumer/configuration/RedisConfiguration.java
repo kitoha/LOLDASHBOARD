@@ -8,8 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.example.lolconsumer.model.ChampionData;
-import com.example.lolconsumer.model.FeaturedGames;
+import com.example.lolconsumer.dto.model.FeaturedGames;
 
 @Configuration
 public class RedisConfiguration {

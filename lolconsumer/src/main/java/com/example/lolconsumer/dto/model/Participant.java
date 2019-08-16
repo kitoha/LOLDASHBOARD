@@ -1,4 +1,4 @@
-package com.example.lolconsumer.model;
+package com.example.lolconsumer.dto.model;
 
 import lombok.Data;
 

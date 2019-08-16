@@ -7,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
-
-import javax.transaction.Transactional;
-
 import com.example.lolconsumer.Entity.Match;
+import com.example.lolconsumer.dao.repository.MatchRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
