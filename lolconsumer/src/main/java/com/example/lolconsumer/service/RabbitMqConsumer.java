@@ -35,27 +35,30 @@ public class RabbitMqConsumer {
 	public void consumer(FeaturedGames featuredGames) {
 		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
 		String dateString = "";
+		String key = "";
+
 		for (GameList gameList : featuredGames.getGameList()) {
 			String gamemode = gameList.getGameMode();
 			dateString = getDate(gameList.getGameStartTime());
 			log.info("날짜 " + dateString);
+
 			if (gamemode.equals("CLASSIC")) {
 				String configId = gameList.getGameQueueConfigId();
 				if (configId.equals(EnumConfiguration.gameTypeName.soloRank.getValue())) {
 					log.info("5v5 Ranked Solo games");
-					for (Participant participant : gameList.getParticipants()) {
-						zSetOperations.add(EnumConfiguration.gameTypeName.soloRank.name() + dateString,
-							participant.getChampionId(), 1);
-					}
+					key = EnumConfiguration.gameTypeName.soloRank.name() + dateString;
 				} else if (configId.equals(EnumConfiguration.gameTypeName.normalGame.getValue())) {
 					log.info("5v5 Blind Pick games");
-					for (Participant participant : gameList.getParticipants()) {
-						zSetOperations.add(EnumConfiguration.gameTypeName.normalGame.name() + dateString,
-							participant.getChampionId(), 1);
-					}
+					key = EnumConfiguration.gameTypeName.normalGame.name() + dateString;
 				}
+
+				for (Participant participant : gameList.getParticipants()) {
+					zSetOperations.add(key,
+						participant.getChampionId(), 1);
+				}
+
 			} else {
-				log.info("It is ARAM!");
+				log.info("It is ARAM!"); 
 			}
 		}
 	}
