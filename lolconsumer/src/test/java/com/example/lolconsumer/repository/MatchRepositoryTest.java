@@ -19,12 +19,12 @@ public class MatchRepositoryTest {
 	private Match match;
 
 	@Before
-	public void initTest(){
+	public void initTest() {
 		match = new Match();
 	}
 
 	@Test
-	public void saveMatchTest(){
+	public void saveMatchTest() {
 		match.setName("test");
 		matchRepository.save(match);
 	}

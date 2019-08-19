@@ -39,6 +39,7 @@ public class GamesSender {
 		log.info("result : " + result);
 		FeaturedGames featuredGames = this.objectMapperConfiguration.objectMapper.readValue(result,
 			FeaturedGames.class);
-		rabbitMQSender.send(featuredGames);
+		rabbitMQSender.championMessageSender(featuredGames);
+		//rabbitMQSender.userMessageSender(featuredGames);
 	}
 }

@@ -8,15 +8,15 @@ public class EnumConfiguration {
 
 		private String typeName;
 
-		gameTypeName(String typeName){
-			this.typeName=typeName;
+		gameTypeName(String typeName) {
+			this.typeName = typeName;
 		}
 
-		public String getKey(){
+		public String getKey() {
 			return name();
 		}
 
-		public String getValue(){
+		public String getValue() {
 			return typeName;
 		}
 	}

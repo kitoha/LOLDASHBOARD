@@ -15,18 +15,29 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-	@Value("${queuename}")
-	String queueName;
+	@Value("${champion_queuename}")
+	private String championQueueName;
+
+	@Value("${user_score_queuename}")
+	private String userScroeQueueName;
 
 	@Value("${exchange}")
-	String exchange;
+	private String exchange;
 
-	@Value("${routingkey}")
-	private String routingkey;
+	@Value("${champion_routingkey}")
+	private String championRoutingKey;
+
+	@Value("${user_routingkey}")
+	private String userRountingKey;
 
 	@Bean
-	Queue queue() {
-		return new Queue(queueName, false);
+	Queue championQueue() {
+		return new Queue(championQueueName, true);
+	}
+
+	@Bean
+	Queue userScoreQueue() {
+		return new Queue(userScroeQueueName, true);
 	}
 
 	@Bean
@@ -35,8 +46,13 @@ public class RabbitMQConfig {
 	}
 
 	@Bean
-	Binding binding(Queue queue, DirectExchange exchange) {
-		return BindingBuilder.bind(queue).to(exchange).with(routingkey);
+	Binding binding(Queue championQueue, DirectExchange exchange) {
+		return BindingBuilder.bind(championQueue).to(exchange).with(championRoutingKey);
+	}
+
+	@Bean
+	Binding binding2(Queue userScoreQueue, DirectExchange exchange) {
+		return BindingBuilder.bind(userScoreQueue).to(exchange).with(userRountingKey);
 	}
 
 	@Bean

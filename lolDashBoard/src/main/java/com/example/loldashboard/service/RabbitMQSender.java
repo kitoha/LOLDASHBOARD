@@ -15,12 +15,19 @@ public class RabbitMQSender {
 	@Value("${exchange}")
 	private String exchange;
 
-	@Value("${routingkey}")
-	private String routingkey;
+	@Value("${champion_routingkey}")
+	private String championRoutingKey;
 
-	public void send(FeaturedGames featuredGames) {
-		rabbitTemplate.convertAndSend(exchange, routingkey, featuredGames);
+	@Value("${user_routingkey}")
+	private String userRountingKey;
+
+	public void championMessageSender(FeaturedGames featuredGames) {
+		rabbitTemplate.convertAndSend(exchange, championRoutingKey, featuredGames);
 		System.out.println("Send msg = " + featuredGames);
+	}
 
+	public void userMessageSender(FeaturedGames featuredGames) {
+		rabbitTemplate.convertAndSend(exchange, userRountingKey, featuredGames);
+		System.out.println("Send msg = " + featuredGames);
 	}
 }
