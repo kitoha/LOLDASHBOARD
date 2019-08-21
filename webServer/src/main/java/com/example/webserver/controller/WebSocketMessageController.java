@@ -15,19 +15,20 @@ public class WebSocketMessageController {
 	@Autowired
 	ChampionDataService championDataService;
 
+	@SendTo("/subscribe-server/ChampionData")
 	@MessageMapping("/to-client")
 	public String fromClient(String content) throws Exception {
 		log.info("Message from client: {}", content);
-		championDataService.toClientBannedData();
-		Thread.sleep(1000);
-		return "hello";
-	}
 
-	@SendTo("/subscribe-server/ChampionData")
-	public String DataToClient(String content) throws Exception {
-		log.info("cheking message", content);
+		String data = "";
+		if (content.equals("ban-pick")) {
+			data = championDataService.fromClientBannedData();
+		} else {
+			data = championDataService.fromClientData();
+		}
+		log.info("message get");
 		Thread.sleep(1000);
-		return content;
+		return data;
 	}
 
 }

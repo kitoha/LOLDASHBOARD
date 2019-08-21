@@ -26,14 +26,16 @@
                     <tbody bgcolor="white">
                     <tr>
                         <td>
-                            <v-radio-group v-model="graphBtnStatus" class="ml-5">
-                                <v-radio v-on:click="test" class="value-font" label="승률" value="winning-rate"></v-radio>
-                                <v-radio class="value-font" label="밴 픽률" value="ban-pick"></v-radio>
-                                <v-radio class="value-font" label="게임당 픽률" value="game-pick"></v-radio>
+                            <v-radio-group class="ml-5" v-model="graphBtnStatus">
+                                <v-radio class="value-font" label="승률" value="winning-rate"></v-radio>
+                                <v-radio class="value-font" label="밴 픽률" v-on:click="getBannedData"
+                                         value="ban-pick"></v-radio>
+                                <v-radio class="value-font" label="게임당 픽률" v-on:click=" getChampionData"
+                                         value="game-pick"></v-radio>
                             </v-radio-group>
                         </td>
                         <td>
-                            <v-radio-group v-model="timeBtnStatus" class="ml-5">
+                            <v-radio-group class="ml-5" v-model="timeBtnStatus">
                                 <v-radio class="value-font" label="일주일 전" value="weeks"></v-radio>
                                 <v-radio class="value-font" label="오늘" value="days"></v-radio>
                                 <v-radio class="value-font" label="실시간" value="half-hour"></v-radio>
@@ -41,7 +43,7 @@
                         </td>
 
                         <td>
-                            <v-radio-group v-model="modeBtnStatus" class="ml-5">
+                            <v-radio-group class="ml-5" v-model="modeBtnStatus">
                                 <v-radio class="value-font" label="랭크게임" value="rank"></v-radio>
                                 <v-radio class="value-font" label="노말" value="normal"></v-radio>
                             </v-radio-group>
@@ -118,21 +120,23 @@
             this.stompClient = Stomp.over(this.socket)
             this.stompClient.connect({}, frame => {
                 this.stompClient.subscribe('/subscribe-server/ChampionData', (data) => {
-                        var parsed = JSON.parse(data.body.replace(/\\\"/ig, ""))
-                        console.log(parsed)
-                        this.champions = [];
-                        this.totalPickValue = 0.0
-                        for (var i = 0; i < parsed.length; i++) {
-                            var member = new Object()
-                            var idx = this.map.findIndex(item => item.key === parsed[i].value)
-                            member.championName = this.map[idx].name
-                            member.pick = parseFloat(parsed[i].score)
-                            member.key = this.map[idx].id
-                            member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg")
-                            this.champions.push(member)
-                            this.totalPickValue += parseFloat(parsed[i].score)
-                        }
-                        console.log("total : " + this.totalPickValue)
+                    console.log(data)
+                    var parsed = JSON.parse(data.body.replace(/\\\"/ig, ""))
+
+                    this.champions = [];
+                    this.totalPickValue = 0.0
+                    for (var i = 0; i < parsed.length; i++) {
+                        var member = new Object()
+                        var idx = this.map.findIndex(item => item.key === parsed[i].value)
+                        if (idx == '-1') continue;
+                        member.championName = this.map[idx].name
+                        member.pick = parseFloat(parsed[i].score)
+                        member.key = this.map[idx].id
+                        member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg")
+                        this.champions.push(member)
+                        this.totalPickValue += parseFloat(parsed[i].score)
+                    }
+                    console.log("total : " + this.totalPickValue)
 
                     this.champions.sort(function (itemA, itemB) {
                         return itemA.pick > itemB.pick ? -1 : itemA.pick < itemB.pick ? 1 : 0;
@@ -148,21 +152,23 @@
         },
 
         methods: {
-            send() {
-                console.log('Send message:' + this.send_message)
+            send: function (message) {
+                console.log('Send message:' + message)
                 if (this.stompClient && this.stompClient.connected) {
-                    this.stompClient.send('/publish-server/to-client', this.send_message, {})
+                    this.stompClient.send('/publish-server/to-client', message, {})
                 }
             },
 
-            test:function () {
+            getBannedData: function () {
                 console.log("test")
-                this.btnStatus="win"
-                this.send()
+                this.graphBtnStatus = "ban-pick"
+                this.send("ban-pick")
             },
 
-            connect() {
-
+            getChampionData: function () {
+                console.log("test2")
+                this.graphBtnStatus = "game-pick"
+                this.send("game-pick")
             }
         }
 

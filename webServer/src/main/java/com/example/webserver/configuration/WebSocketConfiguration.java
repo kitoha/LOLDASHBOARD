@@ -30,12 +30,4 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 		registry.setApplicationDestinationPrefixes("/publish-server");
 	}
 
-	//	@EventListener
-	//	public void test(SessionConnectedEvent event) throws  Exception{
-	//		StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-	//		log.info("[Connected] {}", sha.getSessionId());
-	//		championDataService.toClientData();
-	//
-	//	}
-
 }

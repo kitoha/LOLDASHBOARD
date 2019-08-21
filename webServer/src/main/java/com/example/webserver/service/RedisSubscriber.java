@@ -21,7 +21,7 @@ public class RedisSubscriber implements MessageListener {
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		String result = (String)redisTemplate.getStringSerializer().deserialize(message.getBody());
-		championDataService.toClientData();
+		//championDataService.toClientData();
 		log.info(" Redis Message GET : " + result);
 	}
 }

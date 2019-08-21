@@ -1,7 +1,5 @@
 package com.example.webserver.service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +49,14 @@ public class ChampionDataService {
 		template.convertAndSend("/subscribe-server/ChampionData", data);
 	}
 
-	public void toClientBannedData(){
+	public String fromClientData() {
+		String data = getChampionData("soloRank*:*-21/08/2019");
+		return data;
+	}
+
+	public String fromClientBannedData() {
 		String data = getChampionData("BANsoloRank*:*-21/08/2019");
-		template.convertAndSend("/subscribe-server/ChampionData", data);
+		return data;
 	}
 
 }
