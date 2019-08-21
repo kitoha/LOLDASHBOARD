@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class GameList {
 	List<Participant> participants;
+	List<BannedChampion> bannedChampions;
 	private String gameId;
 	private String gameStartTime;
 	private String platformId;

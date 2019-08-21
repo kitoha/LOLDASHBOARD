@@ -9,20 +9,22 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.example.lolconsumer.dto.model.FeaturedGames;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration
 public class RedisConfiguration {
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		System.out.println("RedisConnectionFactory start");
+		log.info("RedisConnectionFactory start");
 		LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory();
 		return lettuceConnectionFactory;
 	}
 
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
-		System.out.println("RedisTemplate start");
+		log.info("RedisTemplate start");
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(redisConnectionFactory());
 		redisTemplate.setKeySerializer(new StringRedisSerializer());

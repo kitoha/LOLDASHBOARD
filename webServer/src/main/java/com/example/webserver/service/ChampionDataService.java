@@ -27,19 +27,17 @@ public class ChampionDataService {
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 
-	public String getChampionData() {
-		String currentTime = DateTimeFormatter.ISO_DATE_TIME.format(LocalDateTime.now());
+	public String getChampionData(String pattern) {
 		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
 		List<String> keys = new ArrayList<>();
 		RedisConnection redisConnection = redisTemplate.getConnectionFactory().getConnection();
-		ScanOptions options = ScanOptions.scanOptions().match("soloRank*:*-20/08/2019").build();
+		ScanOptions options = ScanOptions.scanOptions().match(pattern).build();
 		Cursor<byte[]> cursor = redisConnection.scan(options);
 
 		while (cursor.hasNext()) {
-			//log.info(new String(cursor.next()));
 			keys.add(new String(cursor.next()));
 		}
-		//		keys.add("soloRank06:19-18/08/2019");
+
 		zSetOperations.unionAndStore("", keys, "out");
 		Object object = zSetOperations.rangeWithScores("out", 0, -1);
 		Gson gson = new Gson();
@@ -49,7 +47,12 @@ public class ChampionDataService {
 	}
 
 	public void toClientData() {
-		String data = getChampionData();
+		String data = getChampionData("soloRank*:*-21/08/2019");
+		template.convertAndSend("/subscribe-server/ChampionData", data);
+	}
+
+	public void toClientBannedData(){
+		String data = getChampionData("BANsoloRank*:*-21/08/2019");
 		template.convertAndSend("/subscribe-server/ChampionData", data);
 	}
 

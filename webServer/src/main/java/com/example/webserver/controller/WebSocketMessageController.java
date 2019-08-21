@@ -18,9 +18,9 @@ public class WebSocketMessageController {
 	@MessageMapping("/to-client")
 	public String fromClient(String content) throws Exception {
 		log.info("Message from client: {}", content);
-		String data = championDataService.getChampionData();
+		championDataService.toClientBannedData();
 		Thread.sleep(1000);
-		return data;
+		return "hello";
 	}
 
 	@SendTo("/subscribe-server/ChampionData")

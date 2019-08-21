@@ -12,6 +12,7 @@ import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 import com.example.lolconsumer.configuration.EnumConfiguration;
+import com.example.lolconsumer.dto.model.BannedChampion;
 import com.example.lolconsumer.dto.model.FeaturedGames;
 import com.example.lolconsumer.dto.model.GameList;
 import com.example.lolconsumer.dto.model.Participant;
@@ -40,6 +41,7 @@ public class RabbitMqConsumer {
 		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
 		String dateString = "";
 		String key = "";
+		String banKey = "";
 
 		for (GameList gameList : featuredGames.getGameList()) {
 			String gamemode = gameList.getGameMode();
@@ -51,6 +53,10 @@ public class RabbitMqConsumer {
 				if (configId.equals(EnumConfiguration.gameTypeName.soloRank.getValue())) {
 					log.info("5v5 Ranked Solo games");
 					key = EnumConfiguration.gameTypeName.soloRank.name() + dateString;
+					banKey = "BAN" + EnumConfiguration.gameTypeName.soloRank.name() + dateString;
+					for(BannedChampion bannedChampion:gameList.getBannedChampions()){
+						zSetOperations.add(banKey,bannedChampion.getChampionId(),1);
+					}
 				} else if (configId.equals(EnumConfiguration.gameTypeName.normalGame.getValue())) {
 					log.info("5v5 Blind Pick games");
 					key = EnumConfiguration.gameTypeName.normalGame.name() + dateString;
