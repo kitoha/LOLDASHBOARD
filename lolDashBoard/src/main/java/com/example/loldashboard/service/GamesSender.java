@@ -36,10 +36,9 @@ public class GamesSender {
 			throw new GameListException(responseCodeChecker.getMessage());
 		}
 
-		log.info("result : " + result);
 		FeaturedGames featuredGames = this.objectMapperConfiguration.objectMapper.readValue(result,
 			FeaturedGames.class);
+		log.info("result : " + featuredGames);
 		rabbitMQSender.championMessageSender(featuredGames);
-		//rabbitMQSender.userMessageSender(featuredGames);
 	}
 }

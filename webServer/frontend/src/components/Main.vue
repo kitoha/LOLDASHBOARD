@@ -1,13 +1,13 @@
 <template>
-    <v-container style="height: 100%" >
+    <v-container style="height: 100%">
         <v-layout column style="height: 100%">
-            <v-flex xs2 >
-                <v-card-title id="title-font" class="justify-center mt-10">
+            <v-flex xs2>
+                <v-card-title class="justify-center mt-10" id="title-font">
                     LOL DASHBOARD
                 </v-card-title>
             </v-flex>
-            <v-layout class="justify-center align-center mt-10">
-                <v-flex xs10 color="white">
+            <v-layout class="justify-center mt-10">
+                <v-flex color="white" xs7>
                     <v-text-field
                             label="소환사명을 입력해주세요."
                             outlined
@@ -26,24 +26,26 @@
                     <tbody bgcolor="white">
                     <tr>
                         <td>
-                            <v-radio-group class="ml-5">
-                                <v-radio label="승률" class="value-font"></v-radio>
-                                <v-radio label="밴 픽률" class="value-font"></v-radio>
-                                <v-radio label="게임당 픽률" class="value-font" ></v-radio>
+                            <v-radio-group class="ml-5" v-model="graphBtnStatus">
+                                <v-radio class="value-font" label="승률" value="winning-rate"></v-radio>
+                                <v-radio class="value-font" label="밴 픽률" v-on:click="getBannedData"
+                                         value="ban-pick"></v-radio>
+                                <v-radio class="value-font" label="게임당 픽률" v-on:click=" getChampionData"
+                                         value="game-pick"></v-radio>
                             </v-radio-group>
                         </td>
                         <td>
-                            <v-radio-group class="ml-5">
-                                <v-radio label="일주일 전" class="value-font"></v-radio>
-                                <v-radio label="오늘" class="value-font"></v-radio>
-                                <v-radio label="실시간" class="value-font"></v-radio>
+                            <v-radio-group class="ml-5" v-model="timeBtnStatus">
+                                <v-radio class="value-font" label="일주일 전" value="weeks"></v-radio>
+                                <v-radio class="value-font" label="오늘" value="days"></v-radio>
+                                <v-radio class="value-font" label="실시간" value="half-hour"></v-radio>
                             </v-radio-group>
                         </td>
 
                         <td>
-                            <v-radio-group class="ml-5">
-                                <v-radio label="랭크게임" class="value-font"></v-radio>
-                                <v-radio label="노말" class="value-font"></v-radio>
+                            <v-radio-group class="ml-5" v-model="modeBtnStatus">
+                                <v-radio class="value-font" label="랭크게임" value="rank"></v-radio>
+                                <v-radio class="value-font" label="노말" value="normal"></v-radio>
                             </v-radio-group>
                         </td>
                     </tr>
@@ -55,26 +57,26 @@
                     <thead bgcolor="#6799FF">
                     <tr>
                         <th style="color: white">순위</th>
-                        <th style="width:7%; color: white;">챔피언</th>
+                        <th style="width:13%; color: white;">챔피언</th>
                         <th colspan="1.5"></th>
                         <th style="color: white">게임당 픽률</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(item, index) in chamions" :key="item.name">
-                        <td class="value-font ">{{index+1}}</td>
+                    <tr :key="item.name" v-for="(item, index) in champions">
+                        <td class="value-font" style="width: 7%">{{index+1}}</td>
                         <td style="padding:0px;width:2rem;">
                             <img class="champion-cell ml-3"
-                                 src="../assets/AnnieSquare.png"
                                  contain
+                                 v-bind:src="item.src"
                             ><img>
                         </td>
                         <td class="value-font">
-                            {{ item.name }}
+                            {{ item.championName }}
                         </td>
                         <td>
-                            <div class="graph" :style="{width: item.pick+'px'}"></div>
-                            <span class="value-font value-color">{{item.pick}}%</span>
+                            <div :style="{width: item.pick+'px'}" class="graph"></div>
+                            <span class="value-font value-color">{{(item.pick / totalPickValue *100.0).toFixed(2)}}%</span>
                         </td>
                     </tr>
                     </tbody>
@@ -86,36 +88,87 @@
 </template>
 
 <script>
+    import SockJS from 'sockjs-client'
+    import Stomp from 'webstomp-client'
+
     export default {
-        data(){
+        data() {
             return {
-                chamions:[
-                    {
-                        name: "애니",
-                        pick: 78
-                    },{
-                        name: "이즈리얼",
-                        pick: 15,
-                    },{
-                        name: "아리",
-                        pick: 7
-                    },{
-                        name: "아트록스",
-                        pick: 7
+                graphBtnStatus: "game-pick",
+                timeBtnStatus: "half-hour",
+                modeBtnStatus: "rank",
+                totalPickValue: 0.0,
+                champions: [],
+                map: []
+            }
+        },
+
+        mounted() {
+            const config = require('../assets/champion.json')
+
+            for (var key in config.data) {
+                var member = new Object()
+                member.name = config.data[key].name
+                member.id = key
+                member.key = config.data[key].key
+                this.map.push(member)
+                //console.log(config.data[key].key + "  " +config.data[key].name + " " + key)
+            }
+
+            console.log(this.map.findIndex(item => item.key === '1'))
+            this.socket = new SockJS('http://localhost:8080/websocket-endpoint')
+            this.stompClient = Stomp.over(this.socket)
+            this.stompClient.connect({}, frame => {
+                this.stompClient.subscribe('/subscribe-server/ChampionData', (data) => {
+                    console.log(data)
+                    var parsed = JSON.parse(data.body.replace(/\\\"/ig, ""))
+
+                    this.champions = [];
+                    this.totalPickValue = 0.0
+                    for (var i = 0; i < parsed.length; i++) {
+                        var member = new Object()
+                        var idx = this.map.findIndex(item => item.key === parsed[i].value)
+                        if (idx == '-1') continue;
+                        member.championName = this.map[idx].name
+                        member.pick = parseFloat(parsed[i].score)
+                        member.key = this.map[idx].id
+                        member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg")
+                        this.champions.push(member)
+                        this.totalPickValue += parseFloat(parsed[i].score)
                     }
-                    ,{
-                        name: "유미",
-                        pick: 7
-                    }
-                    ,{
-                        name: "시비르",
-                        pick: 7
-                    }
-                    ,{
-                        name: "베인",
-                        pick: 7
-                    }
-                ]
+                    console.log("total : " + this.totalPickValue)
+
+                    this.champions.sort(function (itemA, itemB) {
+                        return itemA.pick > itemB.pick ? -1 : itemA.pick < itemB.pick ? 1 : 0;
+                    })
+                })
+
+            }, (error) => {
+                console.log(error)
+
+            })
+
+
+        },
+
+        methods: {
+            send: function (message) {
+                console.log('Send message:' + message)
+                if (this.stompClient && this.stompClient.connected) {
+                    this.stompClient.send('/publish-server/to-client', message, {})
+                }
+            },
+
+            getBannedData: function () {
+                console.log("test")
+                this.graphBtnStatus = "ban-pick"
+                this.send("ban-pick")
+            },
+
+            getChampionData: function () {
+                console.log("test2")
+                this.graphBtnStatus = "game-pick"
+                this.send("game-pick")
             }
         }
 
@@ -123,18 +176,19 @@
 </script>
 
 <style>
-    #title-font{
+    #title-font {
         font-size: 3.5rem;
         font-weight: bold;
     }
 
-    .table-size{
+    .table-size {
         margin-left: auto;
         margin-right: auto;
-        width: 83%;
+        width: 58%;
         border: 1px solid #d5d8d8;
     }
-    .champion-cell{
+
+    .champion-cell {
         margin-top: 1rem;
         display: block;
         width: 2rem;
@@ -142,16 +196,19 @@
         border-radius: 50%;
         overflow: hidden;
     }
-    .value-font{
+
+    .value-font {
         font-weight: bold;
         font-size: 0.75rem;
         font-family: Helvetica, "Malgun Gothic", "Apple SD Gothic Neo", AppleGothic, Dotum, Arial, Tahoma;
     }
-    .value-color{
+
+    .value-color {
         margin-left: 0.2rem;
         color: #51758a;
     }
-    .graph{
+
+    .graph {
         display: inline-block;
         background-color: #1f8ecd;
         border: 1px solid;
