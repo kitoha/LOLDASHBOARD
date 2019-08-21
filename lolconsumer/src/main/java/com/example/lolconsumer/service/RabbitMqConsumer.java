@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 import com.example.lolconsumer.configuration.EnumConfiguration;
@@ -22,6 +23,9 @@ public class RabbitMqConsumer {
 
 	@Autowired
 	RedisTemplate<String, Object> redisTemplate;
+
+	@Autowired
+	RedisPublisher redisPublisher;
 
 	private String getDate(String gameStartTime) {
 		SimpleDateFormat formatter = new SimpleDateFormat("hh:mm-dd/MM/yyyy");
@@ -58,8 +62,12 @@ public class RabbitMqConsumer {
 				}
 
 			} else {
-				log.info("It is ARAM!"); 
+				log.info("It is ARAM!");
 			}
 		}
+
+		ChannelTopic channelTopic = new ChannelTopic("champion");
+
+		redisPublisher.publish(channelTopic, "send message");
 	}
 }

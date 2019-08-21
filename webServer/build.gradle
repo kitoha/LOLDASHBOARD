@@ -21,7 +21,9 @@ repositories {
 }
 
 dependencies {
+    compile('com.google.code.gson:gson:2.8.5')
     compile("org.springframework.boot:spring-boot-starter-data-redis")
+    compile('org.springframework.boot:spring-boot-starter-websocket')
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
