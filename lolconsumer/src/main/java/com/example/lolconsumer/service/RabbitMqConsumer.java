@@ -3,6 +3,7 @@ package com.example.lolconsumer.service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class RabbitMqConsumer {
 	RedisPublisher redisPublisher;
 
 	private String getDate(String gameStartTime) {
-		SimpleDateFormat formatter = new SimpleDateFormat("hh:mm-dd/MM/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("kk:mm-dd/MM/yyyy");
 		formatter.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		Date date = new Date(Long.parseLong(gameStartTime));
 		String dateString = formatter.format(date);
@@ -54,8 +55,8 @@ public class RabbitMqConsumer {
 					log.info("5v5 Ranked Solo games");
 					key = EnumConfiguration.gameTypeName.soloRank.name() + dateString;
 					banKey = "BAN" + EnumConfiguration.gameTypeName.soloRank.name() + dateString;
-					for(BannedChampion bannedChampion:gameList.getBannedChampions()){
-						zSetOperations.add(banKey,bannedChampion.getChampionId(),1);
+					for (BannedChampion bannedChampion : gameList.getBannedChampions()) {
+						zSetOperations.add(banKey, bannedChampion.getChampionId(), 1);
 					}
 				} else if (configId.equals(EnumConfiguration.gameTypeName.normalGame.getValue())) {
 					log.info("5v5 Blind Pick games");
@@ -65,6 +66,7 @@ public class RabbitMqConsumer {
 				for (Participant participant : gameList.getParticipants()) {
 					zSetOperations.add(key,
 						participant.getChampionId(), 1);
+					redisTemplate.expire(key, 604800, TimeUnit.SECONDS);
 				}
 
 			} else {

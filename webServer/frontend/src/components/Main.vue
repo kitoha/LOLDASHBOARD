@@ -1,6 +1,6 @@
 <template>
     <v-container style="height: 100%">
-        <v-layout column style="height: 100%">
+        <v-layout column style="height: 100%" v-show="activate">
             <v-flex xs2>
                 <v-card-title class="justify-center mt-10" id="title-font">
                     LOL DASHBOARD
@@ -36,9 +36,10 @@
                         </td>
                         <td>
                             <v-radio-group class="ml-5" v-model="timeBtnStatus">
-                                <v-radio class="value-font" label="일주일 전" value="weeks"></v-radio>
-                                <v-radio class="value-font" label="오늘" value="days"></v-radio>
-                                <v-radio class="value-font" label="실시간" value="half-hour"></v-radio>
+                                <v-radio class="value-font" label="일주일 전" v-on:click="getWeekData"
+                                         value="weeks"></v-radio>
+                                <v-radio class="value-font" label="오늘" v-on:click="getDayData" value="days"></v-radio>
+                                <v-radio class="value-font" label="한시간" v-on:click="getHourData" value="hour"></v-radio>
                             </v-radio-group>
                         </td>
 
@@ -94,8 +95,11 @@
     export default {
         data() {
             return {
+                activate: true,
+                gamemode: "SoloRank",
+                timemode: "Hour",
                 graphBtnStatus: "game-pick",
-                timeBtnStatus: "half-hour",
+                timeBtnStatus: "hour",
                 modeBtnStatus: "rank",
                 totalPickValue: 0.0,
                 champions: [],
@@ -161,14 +165,34 @@
 
             getBannedData: function () {
                 console.log("test")
+                this.gamemode = "BAN"
                 this.graphBtnStatus = "ban-pick"
-                this.send("ban-pick")
+                this.send(this.gamemode + "-" + this.timemode)
             },
 
             getChampionData: function () {
                 console.log("test2")
+                this.gamemode = "SoloRank"
                 this.graphBtnStatus = "game-pick"
-                this.send("game-pick")
+                this.send(this.gamemode + "-" + this.timemode)
+            },
+
+            getDayData: function () {
+                this.timemode = "Day"
+                this.timeBtnStatus = "days"
+                this.send(this.gamemode + "-" + this.timemode)
+            },
+
+            getHourData: function () {
+                this.timemode = "Hour"
+                this.timeBtnStatus = "hour"
+                this.send(this.gamemode + "-" + this.timemode)
+            },
+
+            getWeekData: function () {
+                this.timemode = "Week"
+                this.timeBtnStatus = "weeks"
+                this.send(this.gamemode + "-" + this.timemode)
             }
         }
 

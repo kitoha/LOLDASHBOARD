@@ -18,10 +18,18 @@ public class RedisSubscriber implements MessageListener {
 	@Autowired
 	ChampionDataService championDataService;
 
+	@Autowired
+	GetTimeFormatService getTimeFormatService;
+
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		String result = (String)redisTemplate.getStringSerializer().deserialize(message.getBody());
-		//championDataService.toClientData();
+		championDataService.setChampionData(getTimeFormatService.getDayPattern("soloRank"), "SoloRank-Day", 86400);
+		championDataService.setChampionData(getTimeFormatService.getHourPattern("soloRank"), "SoloRank-Hour", 3600);
+		championDataService.setChampionData(getTimeFormatService.getWeekPattern("soloRank"), "SoloRank-Week", 604800);
+		championDataService.setChampionData(getTimeFormatService.getDayPattern("BANsoloRank"), "BAN-Day", 86400);
+		championDataService.setChampionData(getTimeFormatService.getHourPattern("BANsoloRank"), "BAN-Hour", 3600);
+		championDataService.setChampionData(getTimeFormatService.getWeekPattern("BANsoloRank"), "BAN-Week", 604800);
 		log.info(" Redis Message GET : " + result);
 	}
 }

@@ -1,13 +1,10 @@
 package com.example.webserver.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -25,37 +22,29 @@ public class ChampionDataService {
 	@Autowired
 	private RedisTemplate<String, Object> redisTemplate;
 
-	public String getChampionData(String pattern) {
+	public void setChampionData(String pattern, String resultKeyName, long seconds) {
 		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
-		List<String> keys = new ArrayList<>();
-		RedisConnection redisConnection = redisTemplate.getConnectionFactory().getConnection();
-		ScanOptions options = ScanOptions.scanOptions().match(pattern).build();
-		Cursor<byte[]> cursor = redisConnection.scan(options);
+		Set<String> keys = redisTemplate.keys(pattern);
+		zSetOperations.unionAndStore("", keys, resultKeyName);
+		redisTemplate.expire(resultKeyName, seconds, TimeUnit.SECONDS);
+	}
 
-		while (cursor.hasNext()) {
-			keys.add(new String(cursor.next()));
-		}
-
-		zSetOperations.unionAndStore("", keys, "out");
-		Object object = zSetOperations.rangeWithScores("out", 0, -1);
+	public String getChampionData(String resultKeyName) {
+		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
+		Object object = zSetOperations.rangeWithScores(resultKeyName, 0, -1);
 		Gson gson = new Gson();
 		String data = gson.toJson(object);
 		log.info(" Message send to client: {}", data);
 		return data;
 	}
 
-	public void toClientData() {
-		String data = getChampionData("soloRank*:*-21/08/2019");
+	public void toClientData(String resultKeyName) {
+		String data = getChampionData(resultKeyName);
 		template.convertAndSend("/subscribe-server/ChampionData", data);
 	}
 
-	public String fromClientData() {
-		String data = getChampionData("soloRank*:*-21/08/2019");
-		return data;
-	}
-
-	public String fromClientBannedData() {
-		String data = getChampionData("BANsoloRank*:*-21/08/2019");
+	public String fromClientData(String resultKeyName) {
+		String data = getChampionData(resultKeyName);
 		return data;
 	}
 
