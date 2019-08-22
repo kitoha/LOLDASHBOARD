@@ -1,6 +1,15 @@
 <template>
     <v-container style="height: 100%">
-        <v-layout column style="height: 100%" v-show="activate">
+        <v-overlay color="white" v-show="loading">
+            <v-progress-circular
+                    :size="150"
+                    color="primary"
+                    indeterminate
+                    width="10"
+            >데이터받는중...
+            </v-progress-circular>
+        </v-overlay>
+        <v-layout column style="height: 100%" v-show="mainLoding">
             <v-flex xs2>
                 <v-card-title class="justify-center mt-10" id="title-font">
                     LOL DASHBOARD
@@ -60,7 +69,7 @@
                         <th style="color: white">순위</th>
                         <th style="width:13%; color: white;">챔피언</th>
                         <th colspan="1.5"></th>
-                        <th style="color: white">게임당 픽률</th>
+                        <th style="color: white">{{gamemodeText}}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -70,7 +79,7 @@
                             <img class="champion-cell ml-3"
                                  contain
                                  v-bind:src="item.src"
-                            ><img>
+                            >
                         </td>
                         <td class="value-font">
                             {{ item.championName }}
@@ -82,6 +91,14 @@
                     </tr>
                     </tbody>
                 </v-simple-table>
+            </v-flex>
+            <v-flex class="table-size" v-show="errorMessage" wrap>
+                <div class="ErrorImage">
+                    <img class="image" contain src="../assets/mark.png">
+                </div>
+                <div class="ErrorMessage">
+                    데이터가 존재하지 않습니다. 다른 옵션을 선택해보세요.
+                </div>
             </v-flex>
 
         </v-layout>
@@ -95,7 +112,10 @@
     export default {
         data() {
             return {
-                activate: true,
+                loading: true,
+                mainLoding: false,
+                errorMessage: false,
+                gamemodeText: "게임당 픽률",
                 gamemode: "SoloRank",
                 timemode: "Hour",
                 graphBtnStatus: "game-pick",
@@ -126,9 +146,15 @@
                 this.stompClient.subscribe('/subscribe-server/ChampionData', (data) => {
                     console.log(data)
                     var parsed = JSON.parse(data.body.replace(/\\\"/ig, ""))
-
+                    this.loading = false;
+                    this.mainLoding = true;
                     this.champions = [];
                     this.totalPickValue = 0.0
+                    if (parsed.length == 0) {
+                        this.errorMessage = true
+                    } else {
+                        this.errorMessage = false
+                    }
                     for (var i = 0; i < parsed.length; i++) {
                         var member = new Object()
                         var idx = this.map.findIndex(item => item.key === parsed[i].value)
@@ -141,7 +167,6 @@
                         this.totalPickValue += parseFloat(parsed[i].score)
                     }
                     console.log("total : " + this.totalPickValue)
-
                     this.champions.sort(function (itemA, itemB) {
                         return itemA.pick > itemB.pick ? -1 : itemA.pick < itemB.pick ? 1 : 0;
                     })
@@ -157,6 +182,8 @@
 
         methods: {
             send: function (message) {
+                this.loading = true;
+                this.mainLoding = false;
                 console.log('Send message:' + message)
                 if (this.stompClient && this.stompClient.connected) {
                     this.stompClient.send('/publish-server/to-client', message, {})
@@ -166,6 +193,7 @@
             getBannedData: function () {
                 console.log("test")
                 this.gamemode = "BAN"
+                this.gamemodeText = "게임당 밴률"
                 this.graphBtnStatus = "ban-pick"
                 this.send(this.gamemode + "-" + this.timemode)
             },
@@ -173,6 +201,7 @@
             getChampionData: function () {
                 console.log("test2")
                 this.gamemode = "SoloRank"
+                this.gamemodeText = "게임당 픽률"
                 this.graphBtnStatus = "game-pick"
                 this.send(this.gamemode + "-" + this.timemode)
             },
@@ -213,7 +242,7 @@
     }
 
     .champion-cell {
-        margin-top: 1rem;
+        margin-top: 0.2rem;
         display: block;
         width: 2rem;
         height: 2rem;
@@ -239,5 +268,27 @@
         border-color: #1f8ecd;
         max-width: 60%;
         height: 0.5rem;
+    }
+
+    .ErrorMessage {
+        display: block;
+        padding: 10px 0 120px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: #555e5e;
+        align-content: center;
+    }
+
+    .ErrorImage {
+        display: flex;
+        padding-top: 60px;
+        margin: auto;
+    }
+
+    .image {
+        width: 100px;
+        height: 100px;
+        margin: auto; /* Magic! */
     }
 </style>

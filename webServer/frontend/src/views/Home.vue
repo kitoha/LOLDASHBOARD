@@ -1,5 +1,5 @@
 <template>
-    <Main/>
+    <p>hihihihihihi]i</p>
 </template>
 
 <script>
@@ -9,6 +9,11 @@
     export default {
         components: {
             HelloWorld, Main
+        },
+        data() {
+            return {
+                value: 20
+            }
         },
     };
 </script>
