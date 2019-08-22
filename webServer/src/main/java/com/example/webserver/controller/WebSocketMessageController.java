@@ -21,11 +21,7 @@ public class WebSocketMessageController {
 		log.info("Message from client: {}", content);
 
 		String data = "";
-		if (content.equals("ban-pick")) {
-			data = championDataService.fromClientBannedData();
-		} else {
-			data = championDataService.fromClientData();
-		}
+		data = championDataService.fromClientData(content);
 		log.info("message get");
 		Thread.sleep(1000);
 		return data;

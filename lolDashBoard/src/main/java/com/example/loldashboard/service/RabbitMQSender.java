@@ -23,11 +23,9 @@ public class RabbitMQSender {
 
 	public void championMessageSender(FeaturedGames featuredGames) {
 		rabbitTemplate.convertAndSend(exchange, championRoutingKey, featuredGames);
-		System.out.println("Send msg = " + featuredGames);
 	}
 
 	public void userMessageSender(FeaturedGames featuredGames) {
 		rabbitTemplate.convertAndSend(exchange, userRountingKey, featuredGames);
-		System.out.println("Send msg = " + featuredGames);
 	}
 }

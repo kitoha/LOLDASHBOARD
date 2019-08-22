@@ -24,7 +24,7 @@ public class WebSocketEventListener {
 	@EventListener
 	public void test2(SessionSubscribeEvent event) {
 		log.info("[Subscribed] hi");
-		championDataService.toClientData();
+		championDataService.toClientData("SoloRank-Hour");
 	}
 
 }
