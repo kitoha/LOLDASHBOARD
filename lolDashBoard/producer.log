@@ -32,3 +32,48 @@
 2019-08-25 12:36:05,033 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
 2019-08-25 12:36:35,248 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
 2019-08-25 12:37:05,531 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 14:39:08,548 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 3096 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-25 14:39:08,554 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: local
+2019-08-25 14:39:11,816 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1028 (http)
+2019-08-25 14:39:11,879 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-25 14:39:11,880 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-25 14:39:12,532 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-25 14:39:12,532 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 3900 ms
+2019-08-25 14:39:13,440 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-25 14:39:14,226 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1028 (http) with context path ''
+2019-08-25 14:39:14,404 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 7.102 seconds (JVM running for 14.697)
+2019-08-25 14:39:16,024 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 14:39:16,071 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-25 14:39:16,164 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#7674a051:0/SimpleConnection@4828d2f8 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 56918]
+2019-08-25 14:39:46,500 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 14:40:16,848 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 14:40:47,017 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 14:41:17,329 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 17:02:03,745 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 2996 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-25 17:02:03,755 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: local
+2019-08-25 17:02:06,845 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1028 (http)
+2019-08-25 17:02:06,882 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-25 17:02:06,883 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-25 17:02:07,403 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-25 17:02:07,404 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 3536 ms
+2019-08-25 17:02:08,355 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-25 17:02:09,167 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1028 (http) with context path ''
+2019-08-25 17:02:09,403 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 6.819 seconds (JVM running for 10.423)
+2019-08-25 17:02:10,534 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 17:02:10,604 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-25 17:02:10,765 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#182b435b:0/SimpleConnection@27a661f2 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 50865]
+2019-08-25 17:02:41,093 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 17:04:38,267 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 3308 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-25 17:04:38,283 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: local
+2019-08-25 17:04:41,501 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1028 (http)
+2019-08-25 17:04:41,610 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-25 17:04:41,610 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-25 17:04:42,719 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-25 17:04:42,719 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 4343 ms
+2019-08-25 17:04:44,000 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-25 17:04:44,970 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1028 (http) with context path ''
+2019-08-25 17:04:44,979 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 7.736 seconds (JVM running for 13.742)
+2019-08-25 17:04:45,846 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-25 17:04:45,907 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-25 17:04:46,026 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#3a45c42a:0/SimpleConnection@58dae082 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 51181]
+2019-08-25 17:05:16,326 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5

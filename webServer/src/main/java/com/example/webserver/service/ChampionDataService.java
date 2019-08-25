@@ -45,7 +45,7 @@ public class ChampionDataService {
 	}
 
 	@Scheduled(fixedDelay = 30000)
-	public void scheduledData(){
+	public void scheduledData() {
 		String data = getChampionData("SoloRank-Hour");
 		template.convertAndSend("/subscribe-server/ChampionData/SoloRank/Hour", data);
 		data = getChampionData("SoloRank-Day");
