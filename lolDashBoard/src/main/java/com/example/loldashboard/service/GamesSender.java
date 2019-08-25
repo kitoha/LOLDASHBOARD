@@ -38,7 +38,8 @@ public class GamesSender {
 
 		FeaturedGames featuredGames = this.objectMapperConfiguration.objectMapper.readValue(result,
 			FeaturedGames.class);
-		log.info("result : " + featuredGames);
+
+		log.info("Call Api Scheduled  : " + featuredGames.getGameList().size());
 		rabbitMQSender.championMessageSender(featuredGames);
 	}
 }

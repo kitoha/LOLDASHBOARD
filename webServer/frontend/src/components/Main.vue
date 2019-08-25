@@ -45,9 +45,9 @@
                         </td>
                         <td>
                             <v-radio-group class="ml-5" v-model="timeBtnStatus">
-                                <v-radio class="value-font" label="일주일 전" v-on:click="getWeekData"
+                                <v-radio class="value-font" label="최근 7일" v-on:click="getWeekData"
                                          value="weeks"></v-radio>
-                                <v-radio class="value-font" label="오늘" v-on:click="getDayData" value="days"></v-radio>
+                                <v-radio class="value-font" label="최근 1일" v-on:click="getDayData" value="days"></v-radio>
                                 <v-radio class="value-font" label="한시간" v-on:click="getHourData" value="hour"></v-radio>
                             </v-radio-group>
                         </td>
@@ -63,7 +63,7 @@
                 </table>
             </v-flex>
             <v-flex class="mt-5">
-                <v-simple-table class="table-size">
+                <v-simple-table class="table-size" v-cloak>
                     <thead bgcolor="#6799FF">
                     <tr>
                         <th style="color: white">순위</th>
@@ -115,6 +115,7 @@
                 loading: true,
                 mainLoding: false,
                 errorMessage: false,
+                errorMessageMap: [],
                 gamemodeText: "게임당 픽률",
                 gamemode: "SoloRank",
                 timemode: "Hour",
@@ -123,11 +124,18 @@
                 modeBtnStatus: "rank",
                 totalPickValue: 0.0,
                 champions: [],
-                map: []
+                map: [],
+                championsMap: []
+
+
             }
         },
 
+        computed(){
+        },
+
         mounted() {
+
             const config = require('../assets/champion.json')
 
             for (var key in config.data) {
@@ -143,18 +151,53 @@
             this.socket = new SockJS('http://localhost:8080/websocket-endpoint')
             this.stompClient = Stomp.over(this.socket)
             this.stompClient.connect({}, frame => {
-                this.stompClient.subscribe('/subscribe-server/ChampionData', (data) => {
-                    console.log(data)
+                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Hour","SoloRank-Hour")
+                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Day","SoloRank-Day")
+                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Week","SoloRank-Week")
+                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Hour","BAN-Hour")
+                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Day","BAN-Day")
+                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Week","BAN-Week")
+
+            }, (error) => {
+                console.log(error)
+
+            })
+
+
+
+
+        },
+
+        methods: {
+            send: function (curGameMode,curTimeMode) {
+                this.loading = true;
+                this.mainLoding = false;
+                console.log('Send message:' + curGameMode + " "+curTimeMode)
+                if (this.stompClient && this.stompClient.connected) {
+                    var member = new Object()
+                    member.gameMode = curGameMode
+                    member.timeMode = curTimeMode
+                    var message = JSON.stringify(member)
+                    this.stompClient.send('/publish-server/to-client', message, {})
+                }
+            },
+
+            subscrbeFunction:function(route,name){
+                this.stompClient.subscribe(route, (data) => {
+                    //console.log(data)
                     var parsed = JSON.parse(data.body.replace(/\\\"/ig, ""))
                     this.loading = false;
                     this.mainLoding = true;
-                    this.champions = [];
+                    this.championsMap[name] = []
+                    //this.champions = [];
                     this.totalPickValue = 0.0
                     if (parsed.length == 0) {
-                        this.errorMessage = true
+                        this.errorMessageMap[name] = true
                     } else {
-                        this.errorMessage = false
+                        this.errorMessageMap[name] = false
                     }
+
+                    this.errorMessage= this.errorMessageMap[this.gamemode + "-" +this.timemode]
                     for (var i = 0; i < parsed.length; i++) {
                         var member = new Object()
                         var idx = this.map.findIndex(item => item.key === parsed[i].value)
@@ -163,31 +206,16 @@
                         member.pick = parseFloat(parsed[i].score)
                         member.key = this.map[idx].id
                         member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg")
-                        this.champions.push(member)
+                        //this.champions.push(member)
+                        this.championsMap[name].push(member)
                         this.totalPickValue += parseFloat(parsed[i].score)
                     }
+
                     console.log("total : " + this.totalPickValue)
-                    this.champions.sort(function (itemA, itemB) {
+                    this.championsMap[name].sort(function (itemA, itemB) {
                         return itemA.pick > itemB.pick ? -1 : itemA.pick < itemB.pick ? 1 : 0;
                     })
                 })
-
-            }, (error) => {
-                console.log(error)
-
-            })
-
-
-        },
-
-        methods: {
-            send: function (message) {
-                this.loading = true;
-                this.mainLoding = false;
-                console.log('Send message:' + message)
-                if (this.stompClient && this.stompClient.connected) {
-                    this.stompClient.send('/publish-server/to-client', message, {})
-                }
             },
 
             getBannedData: function () {
@@ -195,7 +223,8 @@
                 this.gamemode = "BAN"
                 this.gamemodeText = "게임당 밴률"
                 this.graphBtnStatus = "ban-pick"
-                this.send(this.gamemode + "-" + this.timemode)
+                this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
+                //this.send(this.gamemode,this.timemode)
             },
 
             getChampionData: function () {
@@ -203,25 +232,29 @@
                 this.gamemode = "SoloRank"
                 this.gamemodeText = "게임당 픽률"
                 this.graphBtnStatus = "game-pick"
-                this.send(this.gamemode + "-" + this.timemode)
+                this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
+               // this.send(this.gamemode, this.timemode)
             },
 
             getDayData: function () {
                 this.timemode = "Day"
                 this.timeBtnStatus = "days"
-                this.send(this.gamemode + "-" + this.timemode)
+                this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
+                //this.send(this.gamemode, this.timemode)
             },
 
             getHourData: function () {
                 this.timemode = "Hour"
                 this.timeBtnStatus = "hour"
-                this.send(this.gamemode + "-" + this.timemode)
+                this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
+               // this.send(this.gamemode, this.timemode)
             },
 
             getWeekData: function () {
                 this.timemode = "Week"
                 this.timeBtnStatus = "weeks"
-                this.send(this.gamemode + "-" + this.timemode)
+                this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
+               // this.send(this.gamemode, this.timemode)
             }
         }
 
