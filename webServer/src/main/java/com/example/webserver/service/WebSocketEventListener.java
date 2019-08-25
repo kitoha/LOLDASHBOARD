@@ -14,10 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class WebSocketEventListener {
 	@Autowired
-	private SimpMessagingTemplate template;
-
-	@Autowired
 	ChampionDataService championDataService;
+	@Autowired
+	private SimpMessagingTemplate template;
 
 	@EventListener
 	public void test(SessionConnectedEvent event) throws Exception {

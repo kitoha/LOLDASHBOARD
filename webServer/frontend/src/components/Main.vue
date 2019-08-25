@@ -47,7 +47,8 @@
                             <v-radio-group class="ml-5" v-model="timeBtnStatus">
                                 <v-radio class="value-font" label="최근 7일" v-on:click="getWeekData"
                                          value="weeks"></v-radio>
-                                <v-radio class="value-font" label="최근 1일" v-on:click="getDayData" value="days"></v-radio>
+                                <v-radio class="value-font" label="최근 1일" v-on:click="getDayData"
+                                         value="days"></v-radio>
                                 <v-radio class="value-font" label="한시간" v-on:click="getHourData" value="hour"></v-radio>
                             </v-radio-group>
                         </td>
@@ -131,7 +132,7 @@
             }
         },
 
-        computed(){
+        computed() {
         },
 
         mounted() {
@@ -151,28 +152,24 @@
             this.socket = new SockJS('http://localhost:8080/websocket-endpoint')
             this.stompClient = Stomp.over(this.socket)
             this.stompClient.connect({}, frame => {
-                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Hour","SoloRank-Hour")
-                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Day","SoloRank-Day")
-                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Week","SoloRank-Week")
-                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Hour","BAN-Hour")
-                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Day","BAN-Day")
-                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Week","BAN-Week")
+                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Hour", "SoloRank-Hour")
+                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Day", "SoloRank-Day")
+                this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Week", "SoloRank-Week")
+                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Hour", "BAN-Hour")
+                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Day", "BAN-Day")
+                this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Week", "BAN-Week")
 
             }, (error) => {
                 console.log(error)
 
             })
-
-
-
-
         },
 
         methods: {
-            send: function (curGameMode,curTimeMode) {
+            send: function (curGameMode, curTimeMode) {
                 this.loading = true;
                 this.mainLoding = false;
-                console.log('Send message:' + curGameMode + " "+curTimeMode)
+                console.log('Send message:' + curGameMode + " " + curTimeMode)
                 if (this.stompClient && this.stompClient.connected) {
                     var member = new Object()
                     member.gameMode = curGameMode
@@ -182,7 +179,7 @@
                 }
             },
 
-            subscrbeFunction:function(route,name){
+            subscrbeFunction: function (route, name) {
                 this.stompClient.subscribe(route, (data) => {
                     //console.log(data)
                     var parsed = JSON.parse(data.body.replace(/\\\"/ig, ""))
@@ -197,7 +194,7 @@
                         this.errorMessageMap[name] = false
                     }
 
-                    this.errorMessage= this.errorMessageMap[this.gamemode + "-" +this.timemode]
+                    this.errorMessage = this.errorMessageMap[this.gamemode + "-" + this.timemode]
                     for (var i = 0; i < parsed.length; i++) {
                         var member = new Object()
                         var idx = this.map.findIndex(item => item.key === parsed[i].value)
@@ -233,7 +230,7 @@
                 this.gamemodeText = "게임당 픽률"
                 this.graphBtnStatus = "game-pick"
                 this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
-               // this.send(this.gamemode, this.timemode)
+                // this.send(this.gamemode, this.timemode)
             },
 
             getDayData: function () {
@@ -247,14 +244,14 @@
                 this.timemode = "Hour"
                 this.timeBtnStatus = "hour"
                 this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
-               // this.send(this.gamemode, this.timemode)
+                // this.send(this.gamemode, this.timemode)
             },
 
             getWeekData: function () {
                 this.timemode = "Week"
                 this.timeBtnStatus = "weeks"
                 this.champions = this.championsMap[this.gamemode + "-" + this.timemode]
-               // this.send(this.gamemode, this.timemode)
+                // this.send(this.gamemode, this.timemode)
             }
         }
 
