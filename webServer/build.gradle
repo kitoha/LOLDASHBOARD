@@ -21,6 +21,9 @@ repositories {
 }
 
 dependencies {
+    //https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-client
+    compile group: 'org.elasticsearch.client', name: 'elasticsearch-rest-client', version: '7.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     compile('com.google.code.gson:gson:2.8.5')
     compile("org.springframework.boot:spring-boot-starter-data-redis")
     compile('org.springframework.boot:spring-boot-starter-websocket')

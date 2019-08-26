@@ -38,9 +38,11 @@
                 gamemode: "SoloRank",
                 timemode: "Hour",
                 totalPickValue: 0.0,
+                totalPickValueMap: [],
                 champions: [],
                 map: [],
-                championsMap: []
+                championsMap: [],
+                championsModeNames: ["SoloRank-Hour", "SoloRank-Day", "SoloRank-Week", "BAN-Hour", "BAN-Day", "BAN-Week"]
             }
         },
 
@@ -60,13 +62,24 @@
             this.socket = new SockJS('http://localhost:8080/websocket-endpoint')
             this.stompClient = Stomp.over(this.socket)
             this.stompClient.connect({}, frame => {
+                const baseURI = 'http://localhost:8080'
+                this.$axios.get(`${baseURI}/api/getAllData`)
+                    .then((result) => {
+                        for (var i = 0; i < result.data.length; i++) {
+                            var name = this.championsModeNames[i]
+                            this.dataProcessMethod(name, result.data[i])
+                        }
+                        var curName = this.gamemode + "-" + this.timemode;
+                        this.errorMessage = this.errorMessageMap[curName];
+                        this.champions = this.championsMap[curName];
+                        this.totalPickValue = this.totalPickValueMap[name];
+                    })
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Hour", "SoloRank-Hour")
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Day", "SoloRank-Day")
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Week", "SoloRank-Week")
                 this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Hour", "BAN-Hour")
                 this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Day", "BAN-Day")
                 this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Week", "BAN-Week")
-
             }, (error) => {
                 console.log(error)
 
@@ -89,28 +102,38 @@
 
             subscrbeFunction: function (route, name) {
                 this.stompClient.subscribe(route, (data) => {
-                    //console.log(data)
-                    var parsed = JSON.parse(data.body.replace(/\\\"/ig, ""))
-                    this.loading = false;
-                    this.mainLoding = true;
-                    this.championsMap[name] = []
-                    this.totalPickValue = 0.0
+                    this.dataProcessMethod(name, data.body)
+                })
+            },
 
-                    for (var i = 0; i < parsed.length; i++) {
-                        var member = new Object()
-                        var idx = this.map.findIndex(item => item.key === parsed[i].value)
-                        if (idx == '-1') continue;
-                        member.championName = this.map[idx].name
-                        member.pick = parseFloat(parsed[i].score)
-                        member.key = this.map[idx].id
-                        member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg")
-                        this.championsMap[name].push(member)
-                        this.totalPickValue += parseFloat(parsed[i].score)
-                    }
+            dataProcessMethod: function (name, data) {
+                var parsed = JSON.parse(data.replace(/\\\"/ig, ""))
+                this.loading = false;
+                this.mainLoding = true;
+                this.championsMap[name] = []
+                this.totalPickValueMap[name] = 0.0
+                this.errorMessageMap[name] = true
 
-                    this.championsMap[name].sort(function (itemA, itemB) {
-                        return itemA.pick > itemB.pick ? -1 : itemA.pick < itemB.pick ? 1 : 0;
-                    })
+                for (var i = 0; i < parsed.length; i++) {
+                    var member = new Object()
+                    var idx = this.map.findIndex(item => item.key === parsed[i].value)
+                    if (idx == '-1') continue;
+                    member.championName = this.map[idx].name
+                    member.pick = parseFloat(parsed[i].score)
+                    member.key = this.map[idx].id
+                    member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg")
+                    this.championsMap[name].push(member)
+                    this.totalPickValueMap[name] += parseFloat(parsed[i].score)
+                }
+
+                if (this.isEmpty(this.championsMap[name])) {
+                    this.errorMessageMap[name] = true;
+                } else {
+                    this.errorMessageMap[name] = false;
+                }
+
+                this.championsMap[name].sort(function (itemA, itemB) {
+                    return itemA.pick > itemB.pick ? -1 : itemA.pick < itemB.pick ? 1 : 0;
                 })
             },
 
@@ -129,12 +152,8 @@
                 this.gamemodeText = table.gamemodeText;
                 var name = this.gamemode + "-" + this.timemode;
                 this.champions = this.championsMap[name];
-
-                if (this.isEmpty(this.champions)) {
-                    this.errorMessage = true;
-                } else {
-                    this.errorMessage = false;
-                }
+                this.totalPickValue = this.totalPickValueMap[name];
+                this.errorMessage = this.errorMessageMap[name];
             }
         }
 

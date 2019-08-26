@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -39,12 +38,6 @@ public class ChampionDataService {
 		return data;
 	}
 
-	public void toClientData(String resultKeyName) {
-		String data = getChampionData(resultKeyName);
-		template.convertAndSend("/subscribe-server/ChampionData/SoloRank/Hour", data);
-	}
-
-	@Scheduled(fixedDelay = 30000)
 	public void scheduledData() {
 		String data = getChampionData("SoloRank-Hour");
 		template.convertAndSend("/subscribe-server/ChampionData/SoloRank/Hour", data);
@@ -58,11 +51,6 @@ public class ChampionDataService {
 		template.convertAndSend("/subscribe-server/ChampionData/BAN/Day", data);
 		data = getChampionData("BAN-Week");
 		template.convertAndSend("/subscribe-server/ChampionData/BAN/Week", data);
-	}
-
-	public String fromClientData(String resultKeyName) {
-		String data = getChampionData(resultKeyName);
-		return data;
 	}
 
 }
