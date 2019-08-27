@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.loldashboard.dto.model.FeaturedGames;
+import com.example.loldashboard.dto.model.MatchGameData;
 
 @Service
 public class RabbitMQSender {
@@ -25,7 +26,7 @@ public class RabbitMQSender {
 		rabbitTemplate.convertAndSend(exchange, championRoutingKey, featuredGames);
 	}
 
-	public void userMessageSender(FeaturedGames featuredGames) {
-		rabbitTemplate.convertAndSend(exchange, userRountingKey, featuredGames);
+	public void userMessageSender(MatchGameData matchGameData) {
+		rabbitTemplate.convertAndSend(exchange, userRountingKey, matchGameData);
 	}
 }

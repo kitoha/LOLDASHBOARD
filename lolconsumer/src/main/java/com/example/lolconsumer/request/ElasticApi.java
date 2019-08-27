@@ -1,4 +1,4 @@
-package com.example.webserver.request;
+package com.example.lolconsumer.request;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,12 +45,18 @@ public class ElasticApi {
 			Response response = null;
 
 			//GET, DELETE 메소드는 HttpEntity가 필요없다
+			if (method.equals("GET") || method.equals("DELETE")) {
+				Request request = new Request(method, url);
+				request.addParameters(params);
+				response = restClient.performRequest(request);
+			} else {
+				HttpEntity entity = new NStringEntity(jsonString, ContentType.APPLICATION_JSON);
+				Request request = new Request(method, url);
+				request.addParameters(params);
+				request.setEntity(entity);
+				response = restClient.performRequest(request);
 
-			HttpEntity entity = new NStringEntity(jsonString, ContentType.APPLICATION_JSON);
-			Request request = new Request(method, url);
-			request.addParameters(params);
-			request.setEntity(entity);
-			response = restClient.performRequest(request);
+			}
 			//앨라스틱서치에서 리턴되는 응답코드를 받는다
 			int statusCode = response.getStatusLine().getStatusCode();
 			//엘라스틱서치에서 리턴되는 응답메시지를 받는다

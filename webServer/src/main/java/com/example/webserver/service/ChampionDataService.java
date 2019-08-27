@@ -2,7 +2,6 @@ package com.example.webserver.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class ChampionDataService {
 		ScanOptions options = ScanOptions.scanOptions().match(pattern).count(10).build();
 
 		Cursor<byte[]> cursor = redisConnection.scan(options);
-		while(cursor.hasNext()){
+		while (cursor.hasNext()) {
 			String cur = new String(cursor.next());
 			keys.add(cur);
 			//keys.add(new String(cursor.next()));

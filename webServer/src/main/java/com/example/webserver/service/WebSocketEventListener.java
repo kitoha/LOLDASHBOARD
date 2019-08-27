@@ -2,7 +2,6 @@ package com.example.webserver.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class WebSocketEventListener {
 	}
 
 	@EventListener
-	public void disConnected(SessionDisconnectEvent event){
+	public void disConnected(SessionDisconnectEvent event) {
 		log.info("[DisConnected]");
 	}
 

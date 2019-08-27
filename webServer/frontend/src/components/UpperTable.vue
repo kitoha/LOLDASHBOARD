@@ -12,7 +12,8 @@
             <tr>
                 <td>
                     <v-radio-group class="ml-5" v-model="graphBtnStatus">
-                        <v-radio class="value-font" label="승률" value="winning-rate" v-on:click="getWinRateData"></v-radio>
+                        <v-radio class="value-font" label="승률" v-on:click="getWinRateData"
+                                 value="winning-rate"></v-radio>
                         <v-radio class="value-font" label="밴 픽률" v-on:click="getBannedData"
                                  value="ban-pick"></v-radio>
                         <v-radio class="value-font" label="게임당 픽률" v-on:click=" getChampionData"
@@ -87,7 +88,7 @@
                 this.$emit("UpperTable", this.tableData)
             },
 
-            getWinRateData:function(){
+            getWinRateData: function () {
                 console.log("버튼 눌렸다!!!")
                 this.graphBtnStatus = "winning-rate"
                 this.tableData.gamemode = "Win"
