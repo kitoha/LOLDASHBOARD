@@ -22,7 +22,7 @@
                     {{ item.championName }}
                 </td>
                 <td>
-                    <div :style="{width: item.pick+'px'}" class="graph"></div>
+                    <div :style="{width: (item.pick / totalPickValue *100.0).toFixed(2)+'px'}" class="graph"></div>
                     <span class="value-font value-color">{{(item.pick / totalPickValue *100.0).toFixed(2)}}%</span>
                 </td>
             </tr>

@@ -21,6 +21,8 @@ repositories {
 }
 
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
     compile('org.springframework.boot:spring-boot-starter-amqp')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'

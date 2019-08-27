@@ -8,15 +8,21 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 import com.example.lolconsumer.configuration.EnumConfiguration;
 import com.example.lolconsumer.dto.model.BannedChampion;
+import com.example.lolconsumer.dto.model.CharacterInfoData;
 import com.example.lolconsumer.dto.model.FeaturedGames;
 import com.example.lolconsumer.dto.model.GameList;
+import com.example.lolconsumer.dto.model.MatchGameData;
 import com.example.lolconsumer.dto.model.Participant;
+import com.example.lolconsumer.dto.model.ParticipantData;
+import com.example.lolconsumer.dto.model.TeamData;
+import com.example.lolconsumer.request.ElasticApi;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,6 +35,9 @@ public class RabbitMqConsumer {
 	@Autowired
 	RedisPublisher redisPublisher;
 
+	@Autowired
+	ElasticApi elasticApi;
+
 	private String getDate(String gameStartTime) {
 		SimpleDateFormat formatter = new SimpleDateFormat("kk:mm-dd/MM/yyyy");
 		formatter.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
@@ -40,6 +49,7 @@ public class RabbitMqConsumer {
 	@RabbitListener(queues = "${queuename}")
 	public void consumer(FeaturedGames featuredGames) {
 		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
+		SetOperations<String, Object> setOperations = redisTemplate.opsForSet();
 		String dateString = "";
 		String key = "";
 		String banKey = "";
@@ -69,6 +79,7 @@ public class RabbitMqConsumer {
 					redisTemplate.expire(key, 604800, TimeUnit.SECONDS);
 				}
 
+				setOperations.add(dateString.substring(6), gameList.getGameId());
 			} else {
 				log.info("It is ARAM!");
 			}
@@ -77,5 +88,32 @@ public class RabbitMqConsumer {
 		ChannelTopic channelTopic = new ChannelTopic("champion");
 
 		redisPublisher.publish(channelTopic, "send message");
+	}
+
+	@RabbitListener(queues = "${user_score_queuename}")
+	public void userScoreConsumer(MatchGameData matchGameData) {
+		log.info("user consumer : " + matchGameData);
+		SetOperations<String, Object> setOperations = redisTemplate.opsForSet();
+		Integer winTeam = 0;
+		String championKey = "championId";
+		long milisecondes = System.currentTimeMillis();
+		String date = getDate(String.valueOf(milisecondes)).substring(6);
+
+		for (TeamData teamData : matchGameData.getTeams()) {
+			if (teamData.getWin().equals("Win")) {
+				winTeam = teamData.getTeamId();
+			}
+		}
+
+		for (ParticipantData participant : matchGameData.getParticipants()) {
+			CharacterInfoData characterInfoData = new CharacterInfoData(participant.getChampionId().toString(), true,
+				date);
+			if (participant.getTeamId() != winTeam) {
+				characterInfoData.setWin(false);
+			}
+			elasticApi.callElasticApi("POST", "lol/classic", characterInfoData, null);
+			setOperations.add(championKey, participant.getChampionId().toString());
+		}
+
 	}
 }

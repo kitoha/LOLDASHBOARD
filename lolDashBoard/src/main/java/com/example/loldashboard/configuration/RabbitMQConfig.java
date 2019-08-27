@@ -51,7 +51,7 @@ public class RabbitMQConfig {
 	}
 
 	@Bean
-	Binding binding2(Queue userScoreQueue, DirectExchange exchange) {
+	Binding userScorequeueBiding(Queue userScoreQueue, DirectExchange exchange) {
 		return BindingBuilder.bind(userScoreQueue).to(exchange).with(userRountingKey);
 	}
 

@@ -12,7 +12,8 @@
             <tr>
                 <td>
                     <v-radio-group class="ml-5" v-model="graphBtnStatus">
-                        <v-radio class="value-font" label="승률" value="winning-rate"></v-radio>
+                        <v-radio class="value-font" label="승률" v-on:click="getWinRateData"
+                                 value="winning-rate"></v-radio>
                         <v-radio class="value-font" label="밴 픽률" v-on:click="getBannedData"
                                  value="ban-pick"></v-radio>
                         <v-radio class="value-font" label="게임당 픽률" v-on:click=" getChampionData"
@@ -42,7 +43,6 @@
 
 <script>
     export default {
-
         data() {
             return {
                 tableData: {},
@@ -54,45 +54,44 @@
                 timemode: "Hour",
             }
         },
-
         created() {
             this.tableData.gamemode = "SoloRank"
             this.tableData.timemode = "Hour"
             this.tableData.gamemodeText = "게임당 픽률"
         },
-
         methods: {
             getBannedData: function () {
-                console.log("test")
                 this.graphBtnStatus = "ban-pick"
                 this.tableData.gamemode = "BAN"
                 this.tableData.gamemodeText = "게임당 밴률"
                 this.$emit("UpperTable", this.tableData)
             },
-
             getChampionData: function () {
-                console.log("test2")
                 this.graphBtnStatus = "game-pick"
                 this.tableData.gamemode = "SoloRank"
                 this.tableData.gamemodeText = "게임당 픽률"
                 this.$emit("UpperTable", this.tableData)
             },
-
             getDayData: function () {
                 this.timeBtnStatus = "days"
                 this.tableData.timemode = "Day"
                 this.$emit("UpperTable", this.tableData)
             },
-
             getHourData: function () {
                 this.timeBtnStatus = "hour"
                 this.tableData.timemode = "Hour"
                 this.$emit("UpperTable", this.tableData)
             },
-
             getWeekData: function () {
                 this.timeBtnStatus = "weeks"
                 this.tableData.timemode = "Week"
+                this.$emit("UpperTable", this.tableData)
+            },
+
+            getWinRateData: function () {
+                console.log("버튼 눌렸다!!!")
+                this.graphBtnStatus = "winning-rate"
+                this.tableData.gamemode = "Win"
                 this.$emit("UpperTable", this.tableData)
             }
         },
