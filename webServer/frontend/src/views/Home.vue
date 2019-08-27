@@ -23,7 +23,6 @@
     import Overlay from '../components/Overlay'
     import SockJS from 'sockjs-client'
     import Stomp from 'webstomp-client'
-
     export default {
         components: {
             HelloWorld, Main, UpperTable, ErrorMessage, LowerTable, MainTitle, SearchBar, Overlay
@@ -45,11 +44,8 @@
                 championsModeNames: ["SoloRank-Hour", "SoloRank-Day", "SoloRank-Week", "BAN-Hour", "BAN-Day", "BAN-Week"]
             }
         },
-
         mounted() {
-
             const config = require('../assets/champion.json')
-
             for (var key in config.data) {
                 var member = new Object()
                 member.name = config.data[key].name
@@ -57,10 +53,9 @@
                 member.key = config.data[key].key
                 this.map.push(member)
             }
-
-            console.log(this.map.findIndex(item => item.key === '1'))
             this.socket = new SockJS('http://localhost:8080/websocket-endpoint')
             this.stompClient = Stomp.over(this.socket)
+            this.stompClient.debug = () => {};
             this.stompClient.connect({}, frame => {
                 const baseURI = 'http://localhost:8080'
                 this.$axios.get(`${baseURI}/api/getAllData`)
@@ -72,7 +67,9 @@
                         var curName = this.gamemode + "-" + this.timemode;
                         this.errorMessage = this.errorMessageMap[curName];
                         this.champions = this.championsMap[curName];
-                        this.totalPickValue = this.totalPickValueMap[name];
+                        this.totalPickValue = this.totalPickValueMap[curName];
+                        this.loading = false;
+                        this.mainLoding = true;
                     })
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Hour", "SoloRank-Hour")
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Day", "SoloRank-Day")
@@ -82,7 +79,6 @@
                 this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Week", "BAN-Week")
             }, (error) => {
                 console.log(error)
-
             })
         },
 
@@ -99,21 +95,16 @@
                     this.stompClient.send('/publish-server/to-client', message, {})
                 }
             },
-
             subscrbeFunction: function (route, name) {
                 this.stompClient.subscribe(route, (data) => {
                     this.dataProcessMethod(name, data.body)
                 })
             },
-
             dataProcessMethod: function (name, data) {
                 var parsed = JSON.parse(data.replace(/\\\"/ig, ""))
-                this.loading = false;
-                this.mainLoding = true;
                 this.championsMap[name] = []
                 this.totalPickValueMap[name] = 0.0
                 this.errorMessageMap[name] = true
-
                 for (var i = 0; i < parsed.length; i++) {
                     var member = new Object()
                     var idx = this.map.findIndex(item => item.key === parsed[i].value)
@@ -125,18 +116,15 @@
                     this.championsMap[name].push(member)
                     this.totalPickValueMap[name] += parseFloat(parsed[i].score)
                 }
-
                 if (this.isEmpty(this.championsMap[name])) {
                     this.errorMessageMap[name] = true;
                 } else {
                     this.errorMessageMap[name] = false;
                 }
-
                 this.championsMap[name].sort(function (itemA, itemB) {
                     return itemA.pick > itemB.pick ? -1 : itemA.pick < itemB.pick ? 1 : 0;
                 })
             },
-
             isEmpty: function (obj) {
                 for (var key in obj) {
                     if (obj.hasOwnProperty(key)) {
@@ -145,18 +133,24 @@
                 }
                 return true;
             },
-
             getUpperTableData: function (table) {
                 this.gamemode = table.gamemode;
                 this.timemode = table.timemode;
                 this.gamemodeText = table.gamemodeText;
                 var name = this.gamemode + "-" + this.timemode;
+                
                 this.champions = this.championsMap[name];
                 this.totalPickValue = this.totalPickValueMap[name];
+                //console.log(this.championsMap[name])
+                if (this.isEmpty(this.championsMap[name])) {
+                    this.errorMessageMap[name] = true;
+                } else {
+                    this.errorMessageMap[name] = false;
+                }
+
                 this.errorMessage = this.errorMessageMap[name];
             }
         }
-
     }
 </script>
 
@@ -165,14 +159,12 @@
         font-size: 3.5rem;
         font-weight: bold;
     }
-
     .table-size {
         margin-left: auto;
         margin-right: auto;
         width: 58%;
         border: 1px solid #d5d8d8;
     }
-
     .champion-cell {
         margin-top: 0.2rem;
         display: block;
@@ -181,18 +173,15 @@
         border-radius: 50%;
         overflow: hidden;
     }
-
     .value-font {
         font-weight: bold;
         font-size: 0.75rem;
         font-family: Helvetica, "Malgun Gothic", "Apple SD Gothic Neo", AppleGothic, Dotum, Arial, Tahoma;
     }
-
     .value-color {
         margin-left: 0.2rem;
         color: #51758a;
     }
-
     .graph {
         display: inline-block;
         background-color: #1f8ecd;
@@ -201,7 +190,6 @@
         max-width: 60%;
         height: 0.5rem;
     }
-
     .ErrorMessage {
         display: block;
         padding: 10px 0 120px;
@@ -211,17 +199,14 @@
         color: #555e5e;
         align-content: center;
     }
-
     .ErrorImage {
         display: flex;
         padding-top: 60px;
         margin: auto;
     }
-
     .image {
         width: 100px;
         height: 100px;
         margin: auto; /* Magic! */
     }
 </style>
-

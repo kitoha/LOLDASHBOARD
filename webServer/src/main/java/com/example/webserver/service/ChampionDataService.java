@@ -1,10 +1,15 @@
 package com.example.webserver.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -24,7 +29,17 @@ public class ChampionDataService {
 
 	public void setChampionData(String pattern, String resultKeyName, long seconds) {
 		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
-		Set<String> keys = redisTemplate.keys(pattern);
+		//Set<String> keys = redisTemplate.keys(pattern);
+		List<String> keys = new ArrayList<>();
+		RedisConnection redisConnection = redisTemplate.getConnectionFactory().getConnection();
+		ScanOptions options = ScanOptions.scanOptions().match(pattern).count(10).build();
+
+		Cursor<byte[]> cursor = redisConnection.scan(options);
+		while(cursor.hasNext()){
+			String cur = new String(cursor.next());
+			keys.add(cur);
+			//keys.add(new String(cursor.next()));
+		}
 		zSetOperations.unionAndStore("", keys, resultKeyName);
 		redisTemplate.expire(resultKeyName, seconds, TimeUnit.SECONDS);
 	}

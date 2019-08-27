@@ -41,10 +41,8 @@ public class WebSocketMessageController {
 		log.info("Message from client: {}", content);
 		ClientUserData clientUserData = objectMapperConfiguration.objectMapper
 			.readValue(content, ClientUserData.class);
-
 		String item = clientUserData.getGameMode() + "-" + clientUserData.getTimeMode();
 		String data = championDataService.getChampionData(item);
-
 		log.info("message get : " + item);
 		Thread.sleep(1000);
 	}

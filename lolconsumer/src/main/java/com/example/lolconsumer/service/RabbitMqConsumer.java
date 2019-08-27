@@ -69,6 +69,8 @@ public class RabbitMqConsumer {
 					redisTemplate.expire(key, 604800, TimeUnit.SECONDS);
 				}
 
+
+
 			} else {
 				log.info("It is ARAM!");
 			}
