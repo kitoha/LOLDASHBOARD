@@ -65,6 +65,9 @@ public class WebSocketMessageController {
 		} else if (period.equals("Week")) {
 			startTime = getTimeFormatService.getFromWeekString();
 		}
+		else{
+			return null;
+		}
 
 		return championWinRateService.getChampionWinRateData(startTime, endTime);
 	}

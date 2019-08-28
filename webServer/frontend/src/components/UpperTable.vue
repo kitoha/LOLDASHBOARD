@@ -89,9 +89,8 @@
             },
 
             getWinRateData: function () {
-                console.log("버튼 눌렸다!!!")
                 this.graphBtnStatus = "winning-rate"
-                this.tableData.gamemode = "Win"
+                this.tableData.gamemode = "WinRate"
                 this.$emit("UpperTable", this.tableData)
             }
         },

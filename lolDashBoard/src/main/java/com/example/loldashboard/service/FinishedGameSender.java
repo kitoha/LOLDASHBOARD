@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import com.example.loldashboard.configuration.EnumConfiguration;
 import com.example.loldashboard.configuration.ObjectMapperConfiguration;
@@ -19,7 +19,7 @@ import com.example.loldashboard.request.ApiRequester;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
+@Service
 public class FinishedGameSender {
 
 	@Autowired
@@ -62,8 +62,7 @@ public class FinishedGameSender {
 		return dataGetTrue;
 	}
 
-	@GetMapping("/testvalue")
-	//@Scheduled(cron = "0 0 0/1 * * *")
+	@Scheduled(cron = "0 0 0/1 * * *")
 	public void scheduleGameIdList() throws Exception {
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		long millisecond = System.currentTimeMillis();

@@ -6,7 +6,11 @@
             <SearchBar></SearchBar>
             <UpperTable @UpperTable="getUpperTableData"></UpperTable>
             <LowerTable :champions="champions" :gamemodeText="gamemodeText"
-                        :totalPickValue="totalPickValue"></LowerTable>
+                        :totalPickValue="totalPickValue"
+                        v-show="LowerTableStatus"></LowerTable>
+            <WinRateLowerTable v-show="winRateLoding" :src="this.winRateSrc" :champions="this.champions"
+                        :lowerTableLoading="lowerTableLoading"
+                        :lowerTable="lowerTable"></WinRateLowerTable>
             <ErrorMessage :errorMessage="errorMessage"></ErrorMessage>
         </v-layout>
     </v-container>
@@ -21,30 +25,50 @@
     import SearchBar from '../components/SearchBar'
     import MainTitle from '../components/MainTitle'
     import Overlay from '../components/Overlay'
+    import WinRateLowerTable from '../components/WinRateLowerTable'
     import SockJS from 'sockjs-client'
     import Stomp from 'webstomp-client'
 
     export default {
         components: {
-            HelloWorld, Main, UpperTable, ErrorMessage, LowerTable, MainTitle, SearchBar, Overlay
+            HelloWorld, Main, UpperTable, ErrorMessage, LowerTable, MainTitle, SearchBar, Overlay, WinRateLowerTable
         },
         data() {
             return {
                 loading: true,
                 mainLoding: false,
+
+                /*로딩 변수*/
+                lowerTableLoading: false,
+                lowerTable: true,
+
+                /*초기 세팅변수 */
+                map: [],
+
+                /*에러 메세지 변수*/
                 errorMessage: true,
                 errorMessageMap: [],
+                /*게임 상태 변수*/
                 gamemodeText: "게임당 픽률",
                 gamemode: "SoloRank",
                 timemode: "Hour",
+                champions: [],
+
+                /*게임픽률 변수*/
                 totalPickValue: 0.0,
                 totalPickValueMap: [],
-                champions: [],
-                map: [],
                 championsMap: [],
-                championsModeNames: ["SoloRank-Hour", "SoloRank-Day", "SoloRank-Week", "BAN-Hour", "BAN-Day", "BAN-Week"]
+                LowerTableStatus: true,
+
+                /*subscribe 변수*/
+                championsModeNames: ["SoloRank-Hour", "SoloRank-Day", "SoloRank-Week", "BAN-Hour", "BAN-Day", "BAN-Week"],
+
+                 /*승률 테이블 변수*/
+                winRateLoding: false,
+                winRateSrc: []
             }
         },
+        
         mounted() {
             const config = require('../assets/champion.json')
             for (var key in config.data) {
@@ -54,13 +78,11 @@
                 member.key = config.data[key].key
                 this.map.push(member)
             }
-            this.socket = new SockJS('http://localhost:8080/websocket-endpoint')
+            this.socket = new SockJS('/websocket-endpoint')
             this.stompClient = Stomp.over(this.socket)
-            this.stompClient.debug = () => {
-            };
+            this.stompClient.debug = () => {};
             this.stompClient.connect({}, frame => {
-                const baseURI = 'http://localhost:8080'
-                this.$axios.get(`${baseURI}/api/getAllData`)
+                this.$axios.get('/api/getAllData')
                     .then((result) => {
                         for (var i = 0; i < result.data.length; i++) {
                             var name = this.championsModeNames[i]
@@ -102,6 +124,34 @@
                     this.dataProcessMethod(name, data.body)
                 })
             },
+            getWinRateChampionsData: function(){
+                this.$axios.get(`/api/winrate/${this.timemode}`)
+                .then((result)=>{
+                    var data = result.data;
+                    this.champions = [];
+                    console.log(result);
+                    for(var i =0;i<data.length;i++){
+                        var member = new Object();
+                        member.winRate = data[i].winRate;
+                        var championId = data[i].id.replace(/\"/gi,"");
+                        var idx = this.map.findIndex(item => item.key === championId)
+                        member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg");
+                        member.championName = this.map[idx].name;
+                        member.playCount = data[i].playCount;
+                        this.champions.push(member);
+                   }
+
+                   this.lowerTableLoading = false;
+                   this.lowerTable = true;
+                   
+                   console.log("hello");
+
+                   this.champions.sort(function (itemA, itemB) {
+                    return itemA.winRate > itemB.winRate ? -1 : itemA.winRate < itemB.winRate ? 1 : 0;
+                })
+                })
+            },
+
             dataProcessMethod: function (name, data) {
                 var parsed = JSON.parse(data.replace(/\\\"/ig, ""))
                 this.championsMap[name] = []
@@ -136,21 +186,33 @@
                 return true;
             },
             getUpperTableData: function (table) {
+
                 this.gamemode = table.gamemode;
                 this.timemode = table.timemode;
                 this.gamemodeText = table.gamemodeText;
+                this.errorMessage = false;
                 var name = this.gamemode + "-" + this.timemode;
-
-                this.champions = this.championsMap[name];
-                this.totalPickValue = this.totalPickValueMap[name];
-                //console.log(this.championsMap[name])
-                if (this.isEmpty(this.championsMap[name])) {
-                    this.errorMessageMap[name] = true;
-                } else {
-                    this.errorMessageMap[name] = false;
+                if(this.gamemode == "WinRate" && this.timemode!="Hour"){
+                    this.lowerTableLoading = true;
+                    this.lowerTable = false;
+                    this.getWinRateChampionsData();
+                    this.winRateLoding =true;
+                    this.LowerTableStatus = false; 
                 }
-
-                this.errorMessage = this.errorMessageMap[name];
+                else{
+                    this.champions = this.championsMap[name];
+                    this.totalPickValue = this.totalPickValueMap[name];
+                    //console.log(this.championsMap[name])
+                    this.LowerTableStatus = true;
+                    this.winRateLoding =false;
+                    if (this.isEmpty(this.champions)) {
+                          this.errorMessageMap[name] = true;
+                    } else {
+                    this.errorMessageMap[name] = false;
+                    }
+                    this.errorMessage = this.errorMessageMap[name];
+                }
+               // console.log("hi")
             }
         }
     }
