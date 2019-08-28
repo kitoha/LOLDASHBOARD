@@ -1,7 +1,9 @@
 package com.example.webserver.service;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +16,21 @@ public class GetTimeFormatService {
 		Date date = new Date(Long.parseLong(gameStartTime));
 		String dateString = formatter.format(date);
 		return dateString;
+	}
+
+	public String getDayString() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar calendar = Calendar.getInstance();
+		return simpleDateFormat.format(calendar.getTime());
+
+	}
+
+	public String getFromWeekString() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DATE, -7);
+
+		return simpleDateFormat.format(calendar.getTime());
 	}
 
 	public String getHourPattern(String gamemode) {
