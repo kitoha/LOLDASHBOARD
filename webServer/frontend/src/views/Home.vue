@@ -10,11 +10,13 @@
                         :lowerTableLoading="lowerTableLoading"
                         :totalPickValue="totalPickValue"
                         v-show="LowerTableStatus"></LowerTable>
-            <WinRateLowerTable :champions="this.champions" :lowerTable="lowerTable" :lowerTableLoading="lowerTableLoading"
+            <WinRateLowerTable :champions="this.champions" :lowerTable="lowerTable"
+                               :lowerTableLoading="lowerTableLoading"
                                :src="this.winRateSrc"
                                v-show="winRateLoding"></WinRateLowerTable>
             <ErrorMessage :errorMessage="errorMessage"></ErrorMessage>
         </v-layout>
+        <MainErrorMessage :errorMessage="mainErrorMessage" v-show="mainErrorChecker"></MainErrorMessage>
     </v-container>
 </template>
 
@@ -28,18 +30,30 @@
     import MainTitle from '../components/MainTitle'
     import Overlay from '../components/Overlay'
     import WinRateLowerTable from '../components/WinRateLowerTable'
+    import MainErrorMessage from '../components/MainErrorMessage'
     import SockJS from 'sockjs-client'
     import Stomp from 'webstomp-client'
     import {setTimeout} from 'timers';
 
     export default {
         components: {
-            HelloWorld, Main, UpperTable, ErrorMessage, LowerTable, MainTitle, SearchBar, Overlay, WinRateLowerTable
+            HelloWorld,
+            Main,
+            UpperTable,
+            ErrorMessage,
+            LowerTable,
+            MainTitle,
+            SearchBar,
+            Overlay,
+            WinRateLowerTable,
+            MainErrorMessage
         },
         data() {
             return {
                 loading: true,
                 mainLoding: false,
+                mainErrorChecker: false,
+                mainErrorMessage: "error",
 
                 /*로딩 변수*/
                 lowerTableLoading: false,
@@ -98,7 +112,11 @@
                         this.totalPickValue = this.totalPickValueMap[curName];
                         this.loading = false;
                         this.mainLoding = true;
-                    })
+                    }).catch((error) => {
+                    this.mainErrorMessage = "404 not Found Api Call Failed";
+                    this.loading = false;
+                    this.mainErrorChecker = true;
+                })
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Hour", "SoloRank-Hour")
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Day", "SoloRank-Day")
                 this.subscrbeFunction("/subscribe-server/ChampionData/SoloRank/Week", "SoloRank-Week")
@@ -107,6 +125,10 @@
                 this.subscrbeFunction("/subscribe-server/ChampionData/BAN/Week", "BAN-Week")
             }, (error) => {
                 console.log(error)
+                this.mainErrorMessage = "404 not Found WebSocket Connected Failed";
+                this.loading = false;
+                this.mainErrorChecker = true;
+
             })
         },
         methods: {
@@ -150,7 +172,11 @@
                         this.champions.sort(function (itemA, itemB) {
                             return itemA.winRate > itemB.winRate ? -1 : itemA.winRate < itemB.winRate ? 1 : 0;
                         })
-                    })
+                    }).catch((error) => {
+                    this.mainErrorMessage = "404 not Found Api Call Failed";
+                    this.mainLoding = false;
+                    this.mainErrorChecker = true;
+                })
             },
 
             dataProcessMethod: function (name, data) {

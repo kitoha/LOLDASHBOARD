@@ -11,13 +11,16 @@ import com.example.loldashboard.configuration.ObjectMapperConfiguration;
 import com.example.loldashboard.dto.model.ParameterPair;
 import com.example.loldashboard.dto.model.SummonerInfo;
 import com.example.loldashboard.request.ApiRequester;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class GetSummonerAccountId {
 	@Autowired
 	ObjectMapperConfiguration objectMapperConfiguration;
 
 	public String getAccountId(String userName) throws Exception {
+		log.info("GetSummonerAccountId getAccountId start");
 		ApiRequester apiRequester = new ApiRequester();
 		String result;
 		ArrayList<ParameterPair> params = new ArrayList<>();

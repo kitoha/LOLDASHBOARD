@@ -32,7 +32,6 @@
                 <td>
                     <v-radio-group class="ml-5" v-model="modeBtnStatus">
                         <v-radio class="value-font" label="랭크게임" value="rank"></v-radio>
-                        <v-radio class="value-font" label="노말" value="normal"></v-radio>
                     </v-radio-group>
                 </td>
             </tr>

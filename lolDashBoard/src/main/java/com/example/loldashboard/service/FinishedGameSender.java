@@ -32,15 +32,18 @@ public class FinishedGameSender {
 	ObjectMapperConfiguration objectMapperConfiguration;
 
 	private String getDate(String gameStartTime) {
+		log.info("FinishedGameSender getDate start");
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		formatter.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		Date date = new Date(Long.parseLong(gameStartTime));
 		String dateString = formatter.format(date);
+		log.info("FinishedGameSender getDate end");
 		return dateString;
 	}
 
 	@Async
 	public boolean getFinishedGameData(String gameId) throws Exception {
+		log.info("FinishedGameSender getFinishedGameData start");
 		String result;
 		ApiRequester apiRequester = new ApiRequester();
 		apiRequester.setRegion(EnumConfiguration.regionTypeName.Korea.getValue());
@@ -59,24 +62,26 @@ public class FinishedGameSender {
 			rabbitMQSender.userMessageSender(matchGameData);
 		}
 		Thread.sleep(5000);
+
+		log.info("FinishedGameSender getFinishedGameData end");
 		return dataGetTrue;
 	}
 
 	@Scheduled(cron = "0 0 0/1 * * *")
 	public void scheduleGameIdList() throws Exception {
+		log.info("FinishedGameSender scheduleGameIdList start");
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		long millisecond = System.currentTimeMillis();
 		String key = getDate(String.valueOf(millisecond));
 		Set<String> values = setOperations.members(key);
-
-		log.info("test {}", key);
+		log.info("Gets the champion ID that played the game so far.");
 		for (String string : values) {
 			if (getFinishedGameData(string)) {
 				setOperations.remove(key, string);
 			}
-			log.info("values test  : " + string);
-
+			log.info("champion Id  : " + string);
 		}
-		log.info("test다!");
+
+		log.info("FinishedGameSender scheduleGameIdList end");
 	}
 }

@@ -31,11 +31,11 @@ public class ChampionWinRateService {
 	private ElasticApi elasticApi;
 
 	public List<ChampionWinRateData> getChampionWinRateData(String startTime, String endTime) throws Exception {
+		log.info("ChampionWinRateService getChampionWinRateData start");
 		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
 		Set<String> values = setOperations.members("championId");
 		List<ChampionWinRateData> championWinRateDataList = new ArrayList<>();
 		for (String id : values) {
-			log.info("championid test" + id);
 
 			String jsondata = "{\n"
 				+ "\t\"size\":0,\n"
@@ -67,7 +67,7 @@ public class ChampionWinRateService {
 			String championData = result.get("resultBody").toString();
 			ChampionWinRates championWinRates = this.objectMapperConfiguration.objectMapper.readValue(championData,
 				ChampionWinRates.class);
-			log.info("result : " + championWinRates);
+			log.info("elasticSearch Champion Data : " + championWinRates);
 			Integer winCount = 0;
 			Integer loseCount = 0;
 
@@ -83,8 +83,9 @@ public class ChampionWinRateService {
 			double winRate = (winCount.doubleValue() / playCount.doubleValue()) * 100.0;
 			winRate = Double.parseDouble(String.format("%.2f", winRate));
 			ChampionWinRateData championWinRateData = new ChampionWinRateData(id, winRate, playCount);
-			log.info("test data : " + championWinRateData);
+			log.info("championWinRateData : " + championWinRateData);
 			championWinRateDataList.add(championWinRateData);
+			log.info("ChampionWinRateService getChampionWinRateData end");
 		}
 
 		return championWinRateDataList;

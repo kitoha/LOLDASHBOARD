@@ -23,6 +23,7 @@ public class GamesSender {
 
 	@Scheduled(fixedDelay = 30000)
 	public void scheduleFixedRateTask() throws Exception {
+		log.info("Game Data Create Start  View the current game");
 		String result;
 		ApiRequester apiRequester = new ApiRequester();
 		ResponseCodeChecker responseCodeChecker = new ResponseCodeChecker();
@@ -33,13 +34,15 @@ public class GamesSender {
 		responseCodeChecker.setResponsCode(responseCode);
 
 		if (!responseCodeChecker.checker()) {
+			log.info("api call error");
 			throw new GameListException(responseCodeChecker.getMessage());
 		}
 
 		FeaturedGames featuredGames = this.objectMapperConfiguration.objectMapper.readValue(result,
 			FeaturedGames.class);
 
-		log.info("Call Api Scheduled  : " + featuredGames.getGameList().size());
+		log.info("Call Api Scheduled Number of data called: " + featuredGames.getGameList().size());
 		rabbitMQSender.championMessageSender(featuredGames);
+		log.info("Game Data Create end rabbitMQ Sendered");
 	}
 }

@@ -39,15 +39,23 @@ public class RabbitMqConsumer {
 	ElasticApi elasticApi;
 
 	private String getDate(String gameStartTime) {
+		log.info("RabbitMqConsumer getDate start");
 		SimpleDateFormat formatter = new SimpleDateFormat("kk:mm-dd/MM/yyyy");
 		formatter.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		Date date = new Date(Long.parseLong(gameStartTime));
 		String dateString = formatter.format(date);
+		log.info("RabbitMqConsumer getDate end");
 		return dateString;
 	}
 
 	@RabbitListener(queues = "${queuename}")
 	public void consumer(FeaturedGames featuredGames) {
+		log.info("RabbitMqConsumer ingame Listener start");
+		if (featuredGames.getGameList() == null) {
+			log.info("ingame data is empty");
+			return;
+		}
+
 		ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
 		SetOperations<String, Object> setOperations = redisTemplate.opsForSet();
 		String dateString = "";
@@ -88,11 +96,18 @@ public class RabbitMqConsumer {
 		ChannelTopic channelTopic = new ChannelTopic("champion");
 
 		redisPublisher.publish(channelTopic, "send message");
+
+		log.info("RabbitMqConsumer ingame Listener end");
 	}
 
 	@RabbitListener(queues = "${user_score_queuename}")
 	public void userScoreConsumer(MatchGameData matchGameData) {
+		log.info("RabbitMqConsumer finishedgame Listener start");
 		log.info("user consumer : " + matchGameData);
+		if (matchGameData.getTeams() == null) {
+			log.info("finisedgame data is empty");
+			return;
+		}
 		SetOperations<String, Object> setOperations = redisTemplate.opsForSet();
 		Integer winTeam = 0;
 		String championKey = "championId";
@@ -112,8 +127,12 @@ public class RabbitMqConsumer {
 				characterInfoData.setWin(false);
 			}
 			elasticApi.callElasticApi("POST", "lol/classic", characterInfoData, null);
+			log.info("elasticApi posted characterInfoData");
 			setOperations.add(championKey, participant.getChampionId().toString());
+			log.info("add set finished game champion Id at Redis");
 		}
+
+		log.info("RabbitMqConsumer finishedgame Listener end");
 
 	}
 }

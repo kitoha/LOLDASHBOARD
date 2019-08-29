@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Service;
 
 import com.example.webserver.configuration.EnumConfiguration;
@@ -24,6 +25,7 @@ public class RedisSubscriber implements MessageListener {
 
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
+		log.info("Redis on Message : Redis subscribe start");
 		String result = (String)redisTemplate.getStringSerializer().deserialize(message.getBody());
 		championDataService.setChampionData(getTimeFormatService.getDayPattern("soloRank"), "SoloRank-Day",
 			EnumConfiguration.dayTypeName.Day.getValue());
@@ -37,7 +39,21 @@ public class RedisSubscriber implements MessageListener {
 			EnumConfiguration.dayTypeName.Hour.getValue());
 		championDataService.setChampionData(getTimeFormatService.getWeekPattern("BANsoloRank"), "BAN-Week",
 			EnumConfiguration.dayTypeName.Week.getValue());
-		championDataService.scheduledData();
+		log.info("Redis on Message : finished champion all data ");
+		SetOperations<String, Object> setOperations = redisTemplate.opsForSet();
+		String key = "sessionIds";
+
+		long sessionSize = setOperations.size(key);
+		log.info(Long.toString(sessionSize));
+
+		if (sessionSize > 0) {
+			log.info("RedisSubscriber : subscribe data broadcasting");
+			championDataService.scheduledData();
+		} else {
+			log.info("There is no sessionId ");
+		}
+
 		log.info(" Redis Message GET : " + result);
+		log.info("Redis on Message : Redis subscribe end");
 	}
 }
