@@ -37,6 +37,25 @@ LOL-DASHBOARD
 
 ![간트차트](./Ganttchart.png)
 
+ - 개발 진행 순서.
+
+- 아키텍처 설계 (2019.08.05 -  2019.08.08)
+- InGame Data Producer (2019.08.08 - 2019.08.12)
+1. Producer에 Exchange와 InGaeme Queue Binding 설정.
+2. 30초마다 스케줄링으로 Riot Games에 InGame Data 요청.
+3. 요청 받은 Json Data 를 InGame Queue 삽입.
+
+- InGame Data Consumer (2019.08.09 - 2019.08.13)
+1. Producer가 보낸 보낸 데이터를 모델에 받아 챔피온의 픽률과 밴픽률을 
+Redis Server에 {게임모드-시간}{날짜} 키에 tuple(pickchampionId, score: 1) 값으로 
+set 데이터에 저장.
+
+- MQ 테스트 (2019.09.09 - 2019.09.13)
+
+- Web Server 개발 (2019.09.13 - 2019.09.18)
+ 1. Redis에 저장된 데이터를 불러와 사용자가 요청할 때 데이터를 보냄.
+  -> Redis Publish Subscribe를 활용하여 Redis에 데이터가 갱신될때마다 각 기능에 맞는 데이터를 Redis에 저장. 
+
 UI 그림
 
 - UI 게임 챔피온 픽률 
