@@ -6,11 +6,13 @@
             <SearchBar></SearchBar>
             <UpperTable @UpperTable="getUpperTableData"></UpperTable>
             <LowerTable :champions="champions" :gamemodeText="gamemodeText"
+                        :lowerTable="lowerTable"
+                        :lowerTableLoading="lowerTableLoading"
                         :totalPickValue="totalPickValue"
                         v-show="LowerTableStatus"></LowerTable>
-            <WinRateLowerTable v-show="winRateLoding" :src="this.winRateSrc" :champions="this.champions"
-                        :lowerTableLoading="lowerTableLoading"
-                        :lowerTable="lowerTable"></WinRateLowerTable>
+            <WinRateLowerTable :champions="this.champions" :lowerTable="lowerTable" :lowerTableLoading="lowerTableLoading"
+                               :src="this.winRateSrc"
+                               v-show="winRateLoding"></WinRateLowerTable>
             <ErrorMessage :errorMessage="errorMessage"></ErrorMessage>
         </v-layout>
     </v-container>
@@ -28,6 +30,7 @@
     import WinRateLowerTable from '../components/WinRateLowerTable'
     import SockJS from 'sockjs-client'
     import Stomp from 'webstomp-client'
+    import {setTimeout} from 'timers';
 
     export default {
         components: {
@@ -63,12 +66,12 @@
                 /*subscribe 변수*/
                 championsModeNames: ["SoloRank-Hour", "SoloRank-Day", "SoloRank-Week", "BAN-Hour", "BAN-Day", "BAN-Week"],
 
-                 /*승률 테이블 변수*/
+                /*승률 테이블 변수*/
                 winRateLoding: false,
                 winRateSrc: []
             }
         },
-        
+
         mounted() {
             const config = require('../assets/champion.json')
             for (var key in config.data) {
@@ -80,7 +83,8 @@
             }
             this.socket = new SockJS('/websocket-endpoint')
             this.stompClient = Stomp.over(this.socket)
-            this.stompClient.debug = () => {};
+            this.stompClient.debug = () => {
+            };
             this.stompClient.connect({}, frame => {
                 this.$axios.get('/api/getAllData')
                     .then((result) => {
@@ -105,7 +109,6 @@
                 console.log(error)
             })
         },
-
         methods: {
             send: function (curGameMode, curTimeMode) {
                 this.loading = true;
@@ -124,32 +127,30 @@
                     this.dataProcessMethod(name, data.body)
                 })
             },
-            getWinRateChampionsData: function(){
+            getWinRateChampionsData: function () {
                 this.$axios.get(`/api/winrate/${this.timemode}`)
-                .then((result)=>{
-                    var data = result.data;
-                    this.champions = [];
-                    console.log(result);
-                    for(var i =0;i<data.length;i++){
-                        var member = new Object();
-                        member.winRate = data[i].winRate;
-                        var championId = data[i].id.replace(/\"/gi,"");
-                        var idx = this.map.findIndex(item => item.key === championId)
-                        member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg");
-                        member.championName = this.map[idx].name;
-                        member.playCount = data[i].playCount;
-                        this.champions.push(member);
-                   }
+                    .then((result) => {
+                        var data = result.data;
+                        this.champions = [];
 
-                   this.lowerTableLoading = false;
-                   this.lowerTable = true;
-                   
-                   console.log("hello");
+                        for (var i = 0; i < data.length; i++) {
+                            var member = new Object();
+                            member.winRate = data[i].winRate;
+                            var championId = data[i].id.replace(/\"/gi, "");
+                            var idx = this.map.findIndex(item => item.key === championId)
+                            member.src = require("../assets/championimg/" + this.map[idx].id + "_Square_0_1.jpg");
+                            member.championName = this.map[idx].name;
+                            member.playCount = data[i].playCount;
+                            this.champions.push(member);
+                        }
 
-                   this.champions.sort(function (itemA, itemB) {
-                    return itemA.winRate > itemB.winRate ? -1 : itemA.winRate < itemB.winRate ? 1 : 0;
-                })
-                })
+                        this.lowerTableLoading = false;
+                        this.lowerTable = true;
+
+                        this.champions.sort(function (itemA, itemB) {
+                            return itemA.winRate > itemB.winRate ? -1 : itemA.winRate < itemB.winRate ? 1 : 0;
+                        })
+                    })
             },
 
             dataProcessMethod: function (name, data) {
@@ -186,33 +187,36 @@
                 return true;
             },
             getUpperTableData: function (table) {
-
+                this.lowerTableLoading = true;
+                this.lowerTable = false;
                 this.gamemode = table.gamemode;
                 this.timemode = table.timemode;
+                var name = this.gamemode + "-" + this.timemode;
                 this.gamemodeText = table.gamemodeText;
                 this.errorMessage = false;
-                var name = this.gamemode + "-" + this.timemode;
-                if(this.gamemode == "WinRate" && this.timemode!="Hour"){
-                    this.lowerTableLoading = true;
-                    this.lowerTable = false;
+
+                if (this.gamemode == "WinRate" && this.timemode != "Hour") {
                     this.getWinRateChampionsData();
-                    this.winRateLoding =true;
-                    this.LowerTableStatus = false; 
-                }
-                else{
+                    this.winRateLoding = true;
+                    this.LowerTableStatus = false;
+                } else {
                     this.champions = this.championsMap[name];
                     this.totalPickValue = this.totalPickValueMap[name];
-                    //console.log(this.championsMap[name])
                     this.LowerTableStatus = true;
-                    this.winRateLoding =false;
+                    this.winRateLoding = false;
                     if (this.isEmpty(this.champions)) {
-                          this.errorMessageMap[name] = true;
+                        this.errorMessageMap[name] = true;
                     } else {
-                    this.errorMessageMap[name] = false;
+                        this.errorMessageMap[name] = false;
                     }
                     this.errorMessage = this.errorMessageMap[name];
+
+                    setTimeout(() => {
+                        this.lowerTableLoading = false;
+                        this.lowerTable = true;
+                    }, 1000)
+
                 }
-               // console.log("hi")
             }
         }
     }

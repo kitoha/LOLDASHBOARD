@@ -9,7 +9,7 @@
                 <th style="color: white">{{gamemodeText}}</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody v-show="lowerTable">
             <tr :key="item.name" v-for="(item, index) in champions">
                 <td class="value-font" style="width: 7%">{{index+1}}</td>
                 <td style="padding:0px;width:2rem;">
@@ -28,11 +28,14 @@
             </tr>
             </tbody>
         </v-simple-table>
+        <v-layout class="LodingProgress" v-show="lowerTableLoading">
+            <v-progress-circular color="primary" indeterminate size="170">데이터 받아오는 중...</v-progress-circular>
+        </v-layout>
     </v-flex>
 </template>
 
 <script>
     export default {
-        props: ['gamemodeText', 'champions', 'totalPickValue']
+        props: ['gamemodeText', 'champions', 'totalPickValue', 'lowerTableLoading', 'lowerTable']
     }
 </script>

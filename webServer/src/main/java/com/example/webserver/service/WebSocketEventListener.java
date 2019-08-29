@@ -20,19 +20,20 @@ public class WebSocketEventListener {
 	private SimpMessagingTemplate template;
 
 	@EventListener
-	public void test(SessionConnectedEvent event) throws Exception {
+	public void connected(SessionConnectedEvent event) throws Exception {
 		StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-		log.info("[Connected] {} {}", sha.getSessionId());
+		log.info("[Connected] {} ", sha.getSessionId());
 	}
 
 	@EventListener
-	public void test2(SessionSubscribeEvent event) {
+	public void subsribed(SessionSubscribeEvent event) {
 		log.info("[Subscribed] hi ");
 	}
 
 	@EventListener
 	public void disConnected(SessionDisconnectEvent event) {
-		log.info("[DisConnected]");
+		StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
+		log.info("[DisConnected] {}", sha.getSessionId());
 	}
 
 }
