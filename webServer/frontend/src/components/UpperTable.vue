@@ -32,7 +32,6 @@
                 <td>
                     <v-radio-group class="ml-5" v-model="modeBtnStatus">
                         <v-radio class="value-font" label="랭크게임" value="rank"></v-radio>
-                        <v-radio class="value-font" label="노말" value="normal"></v-radio>
                     </v-radio-group>
                 </td>
             </tr>
@@ -89,9 +88,8 @@
             },
 
             getWinRateData: function () {
-                console.log("버튼 눌렸다!!!")
                 this.graphBtnStatus = "winning-rate"
-                this.tableData.gamemode = "Win"
+                this.tableData.gamemode = "WinRate"
                 this.$emit("UpperTable", this.tableData)
             }
         },

@@ -2,56 +2,38 @@ package com.example.webserver.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.webserver.configuration.ObjectMapperConfiguration;
-import com.example.webserver.dto.model.ChampionWinRates;
-import com.example.webserver.dto.model.ClientUserData;
-import com.example.webserver.request.ElasticApi;
+import com.example.webserver.dto.model.ChampionWinRateData;
 import com.example.webserver.service.ChampionDataService;
+import com.example.webserver.service.ChampionWinRateService;
+import com.example.webserver.service.GetTimeFormatService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
+@RequestMapping("/api")
 @CrossOrigin
 public class WebSocketMessageController {
 
 	@Autowired
-	RedisTemplate<String, String> redisTemplate;
-	@Autowired
-	private SimpMessagingTemplate template;
-	@Autowired
 	private ChampionDataService championDataService;
 
 	@Autowired
-	private ObjectMapperConfiguration objectMapperConfiguration;
+	private ChampionWinRateService championWinRateService;
 
 	@Autowired
-	private ElasticApi elasticApi;
+	private GetTimeFormatService getTimeFormatService;
 
-	@MessageMapping("/to-client")
-	public void fromClient(String content) throws Exception {
-		log.info("Message from client: {}", content);
-		ClientUserData clientUserData = objectMapperConfiguration.objectMapper
-			.readValue(content, ClientUserData.class);
-		String item = clientUserData.getGameMode() + "-" + clientUserData.getTimeMode();
-		String data = championDataService.getChampionData(item);
-		log.info("message get : " + item);
-		Thread.sleep(1000);
-	}
-
-	@GetMapping("/api/getAllData")
+	@GetMapping("/getAllData")
 	public List<String> getAllData() {
+		log.info("WebSocketMessageController : get all champion data start");
 		List<String> result = new ArrayList<>();
 		result.add(championDataService.getChampionData("SoloRank-Hour"));
 		result.add(championDataService.getChampionData("SoloRank-Day"));
@@ -59,36 +41,29 @@ public class WebSocketMessageController {
 		result.add(championDataService.getChampionData("BAN-Hour"));
 		result.add(championDataService.getChampionData("BAN-Day"));
 		result.add(championDataService.getChampionData("BAN-Week"));
+		log.info("WebSocketMessageController : get all champion data end");
 		return result;
 	}
 
-	@GetMapping("/api/winrate")
-	public String getAllWinrate() throws Exception {
-		SetOperations<String, String> setOperations = redisTemplate.opsForSet();
-		Set<String> values = setOperations.members("championId");
-
-		for (String id : values) {
-			log.info("championid test" + id);
-			String jsondata = "{\n"
-				+ "\t\"size\":0,\n"
-				+ "\t\"query\":{\n"
-				+ "\t\t\"term\":{\"name\":" + id + "}\n"
-				+ "\t},\n"
-				+ "\t\"aggs\":{\n"
-				+ "\t\t\"championData\":{\n"
-				+ "\t\t\t\"terms\":{\"field\":\"win\"}\n"
-				+ "\t\t}\n"
-				+ "\t}\n"
-				+ "}";
-
-			Map<String, Object> result = elasticApi.callElasticApi("GET", "lol/classic/_search", null, jsondata);
-			String championData = result.get("resultBody").toString();
-			ChampionWinRates championWinRates = this.objectMapperConfiguration.objectMapper.readValue(championData,
-				ChampionWinRates.class);
-
-			log.info("result : " + championWinRates);
+	@GetMapping("/winrate/{period}")
+	public List<ChampionWinRateData> getAllWinrate(@PathVariable String period) throws Exception {
+		log.info("WebSocketMessageController : getAllWinrate start");
+		String startTime = "";
+		String endTime = "";
+		endTime = getTimeFormatService.getDayString();
+		if (period.equals("Day")) {
+			log.info("Today's champion data is taken from Elastic Search.");
+			startTime = getTimeFormatService.getDayString();
+		} else if (period.equals("Week")) {
+			log.info("Get champion data for one week from Elastic Search.");
+			startTime = getTimeFormatService.getFromWeekString();
+		} else {
+			log.info("One hour not supported.");
+			return null;
 		}
-		return "success";
+
+		log.info("WebSocketMessageController : getAllWinrate end");
+		return championWinRateService.getChampionWinRateData(startTime, endTime);
 	}
 
 }

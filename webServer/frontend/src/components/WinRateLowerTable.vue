@@ -6,7 +6,8 @@
                 <th style="color: white">순위</th>
                 <th style="width:13%; color: white;">챔피언</th>
                 <th colspan="1.5"></th>
-                <th style="color: white">{{gamemodeText}}</th>
+                <th style="color: white">승률</th>
+                <th style="color: white">플레이 수</th>
             </tr>
             </thead>
             <tbody v-show="lowerTable">
@@ -22,8 +23,11 @@
                     {{ item.championName }}
                 </td>
                 <td>
-                    <div :style="{width: (item.pick / totalPickValue *100.0).toFixed(2)+'px'}" class="graph"></div>
-                    <span class="value-font value-color">{{(item.pick / totalPickValue *100.0).toFixed(2)}}%</span>
+                    <div :style="{width: item.winRate +'px'}" class="graph"></div>
+                    <span class="value-font value-color">{{item.winRate}}%</span>
+                </td>
+                <td align="left" class="value-font winRateValueColor">
+                    {{item.playCount}} Play
                 </td>
             </tr>
             </tbody>
@@ -36,6 +40,26 @@
 
 <script>
     export default {
-        props: ['gamemodeText', 'champions', 'totalPickValue', 'lowerTableLoading', 'lowerTable']
+        props: ['src', 'champions', 'lowerTableLoading', 'lowerTable']
+
     }
 </script>
+
+<style>
+    .LodingProgress {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 58%;
+        height: 79%;
+        border: 1px solid #d5d8d8;
+        padding-left: 21.7%;
+        padding-right: 15%;
+        padding-top: 2.7%;
+    }
+
+    .winRateValueColor {
+        margin-left: 0.2rem;
+        color: #FF9900;
+    }
+</style>
