@@ -1,0 +1,57 @@
+2019-08-29 19:49:04,416 INFO com.example.lolconsumer.LolconsumerApplication [main] Starting LolconsumerApplication on AL00000052 with PID 18212 (C:\LolDashBoard\teahwan.kim_2nd\lolconsumer\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolconsumer)
+2019-08-29 19:49:04,422 INFO com.example.lolconsumer.LolconsumerApplication [main] The following profiles are active: local
+2019-08-29 19:49:06,466 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 19:49:06,471 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 19:49:06,574 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 86ms. Found 0 repository interfaces.
+2019-08-29 19:49:06,597 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 19:49:06,600 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 19:49:06,696 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 76ms. Found 0 repository interfaces.
+2019-08-29 19:49:09,531 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1027 (http)
+2019-08-29 19:49:09,602 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 19:49:09,604 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 19:49:11,992 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 19:49:11,993 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 7450 ms
+2019-08-29 19:49:12,420 INFO com.example.lolconsumer.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 19:49:12,424 INFO com.example.lolconsumer.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 19:49:18,118 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 19:49:20,305 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [main] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 19:49:20,921 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [main] Created new connection: rabbitConnectionFactory#5a67e962:0/SimpleConnection@5f2bd6d9 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 57939]
+2019-08-29 19:49:21,283 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1027 (http) with context path ''
+2019-08-29 19:49:21,289 INFO com.example.lolconsumer.LolconsumerApplication [main] Started LolconsumerApplication in 18.312 seconds (JVM running for 34.08)
+2019-08-29 19:49:25,880 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer ingame Listener start
+2019-08-29 19:49:25,885 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate start
+2019-08-29 19:49:25,886 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate end
+2019-08-29 19:49:25,887 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] 날짜 19:36-29/08/2019
+2019-08-29 19:49:25,917 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] 5v5 Ranked Solo games
+2019-08-29 19:49:26,291 INFO io.lettuce.core.EpollProvider [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Starting without optional epoll library
+2019-08-29 19:49:26,294 INFO io.lettuce.core.KqueueProvider [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] Starting without optional kqueue library
+2019-08-29 19:49:29,080 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate start
+2019-08-29 19:49:29,081 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate end
+2019-08-29 19:49:29,082 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] 날짜 19:36-29/08/2019
+2019-08-29 19:49:29,082 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] It is ARAM!
+2019-08-29 19:49:29,082 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate start
+2019-08-29 19:49:29,083 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate end
+2019-08-29 19:49:29,083 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] 날짜 19:39-29/08/2019
+2019-08-29 19:49:29,083 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] It is ARAM!
+2019-08-29 19:49:29,083 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate start
+2019-08-29 19:49:29,083 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate end
+2019-08-29 19:49:29,084 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] 날짜 19:40-29/08/2019
+2019-08-29 19:49:29,084 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] 5v5 Ranked Solo games
+2019-08-29 19:49:29,126 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate start
+2019-08-29 19:49:29,127 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer getDate end
+2019-08-29 19:49:29,127 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] 날짜 19:39-29/08/2019
+2019-08-29 19:49:29,128 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] It is ARAM!
+2019-08-29 19:49:29,130 INFO com.example.lolconsumer.service.RabbitMqConsumer [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-1] RabbitMqConsumer ingame Listener end
+2019-08-29 20:18:41,764 INFO com.example.lolconsumer.LolconsumerApplication [main] Starting LolconsumerApplication on AL00000052 with PID 7220 (C:\LolDashBoard\teahwan.kim_2nd\lolconsumer\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolconsumer)
+2019-08-29 20:18:41,776 INFO com.example.lolconsumer.LolconsumerApplication [main] The following profiles are active: server
+2019-08-29 20:18:43,052 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 20:18:43,056 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 20:18:43,107 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 44ms. Found 0 repository interfaces.
+2019-08-29 20:18:43,121 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 20:18:43,123 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 20:18:43,179 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 26ms. Found 0 repository interfaces.
+2019-08-29 20:18:44,097 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2019-08-29 20:18:44,156 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 20:18:44,157 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 20:54:10,728 INFO com.example.lolconsumer.LolconsumerApplication [main] Starting LolconsumerApplication on AL00000052 with PID 11712 (C:\LolDashBoard\teahwan.kim_2nd\lolconsumer\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolconsumer)
+2019-08-29 20:54:10,741 INFO com.example.lolconsumer.LolconsumerApplication [main] The following profiles are active: server

@@ -1,0 +1,250 @@
+2019-08-29 16:01:00,257 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 14052 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 16:01:00,285 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: local
+2019-08-29 16:01:02,846 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 16:01:02,853 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 16:01:03,008 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 117ms. Found 0 repository interfaces.
+2019-08-29 16:01:04,344 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1028 (http)
+2019-08-29 16:01:04,395 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 16:01:04,402 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 16:01:05,809 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 16:01:05,810 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 5370 ms
+2019-08-29 16:01:06,352 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 16:01:06,355 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 16:01:07,537 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 16:01:08,558 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1028 (http) with context path ''
+2019-08-29 16:01:08,572 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 9.631 seconds (JVM running for 14.417)
+2019-08-29 16:01:09,732 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:01:09,825 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-4-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 16:01:09,925 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-4-thread-1] Created new connection: rabbitConnectionFactory#3b8ee898:0/SimpleConnection@707ffd39 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 65331]
+2019-08-29 16:01:40,227 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:02:10,522 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:02:40,782 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:03:11,110 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:03:41,284 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:04:11,605 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:04:41,837 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:05:12,110 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:05:42,320 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:06:12,683 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:06:42,881 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:07:13,220 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:07:43,416 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:08:13,714 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:08:43,905 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:09:14,286 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:09:44,519 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:10:15,055 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:10:45,490 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:11:15,679 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:11:46,143 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:12:16,337 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:12:46,876 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:13:17,105 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:13:47,588 INFO com.example.loldashboard.service.GamesSender [pool-4-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:15:54,313 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 14920 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 16:15:54,323 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: server
+2019-08-29 16:15:56,381 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 16:15:56,392 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 16:15:56,537 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 102ms. Found 0 repository interfaces.
+2019-08-29 16:15:57,825 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2019-08-29 16:15:57,885 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 16:15:57,886 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 16:15:58,511 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 16:15:58,511 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 4031 ms
+2019-08-29 16:15:59,008 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 16:15:59,010 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 16:16:00,297 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 16:16:01,514 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-29 16:16:01,527 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 8.683 seconds (JVM running for 13.55)
+2019-08-29 16:16:02,906 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:16:03,105 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 16:16:03,234 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#6e78fcf5:0/SimpleConnection@5fd7a003 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 49547]
+2019-08-29 16:16:46,529 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 10908 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 16:16:46,540 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: server
+2019-08-29 16:16:48,504 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 16:16:48,508 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 16:16:48,612 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 78ms. Found 0 repository interfaces.
+2019-08-29 16:16:49,926 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2019-08-29 16:16:50,009 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 16:16:50,010 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 16:16:50,743 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 16:16:50,744 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 4040 ms
+2019-08-29 16:16:51,259 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 16:16:51,262 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 16:16:52,413 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 16:16:53,975 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-29 16:16:53,982 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 8.62 seconds (JVM running for 13.141)
+2019-08-29 16:16:55,143 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled  : 5
+2019-08-29 16:16:55,231 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 16:16:55,325 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#1f86099a:0/SimpleConnection@55a78842 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 49583]
+2019-08-29 19:11:41,350 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 5148 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 19:11:41,355 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: local
+2019-08-29 19:11:42,577 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 19:11:42,582 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 19:11:42,661 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 55ms. Found 0 repository interfaces.
+2019-08-29 19:11:43,510 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1028 (http)
+2019-08-29 19:11:43,549 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 19:11:43,550 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 19:11:44,588 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 19:11:44,588 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 3157 ms
+2019-08-29 19:11:44,865 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 19:11:44,867 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 19:11:46,074 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 19:11:46,742 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:11:46,846 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1028 (http) with context path ''
+2019-08-29 19:11:46,853 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 6.327 seconds (JVM running for 9.73)
+2019-08-29 19:11:47,900 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:11:47,945 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 19:11:48,029 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#77bb0ab5:0/SimpleConnection@4d395672 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 55988]
+2019-08-29 19:11:48,113 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:12:18,116 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:12:18,320 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:12:18,324 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:12:48,327 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:12:48,659 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:12:48,661 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:13:18,664 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:13:18,928 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:13:18,932 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:13:48,934 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:13:49,270 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:13:49,272 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:14:19,275 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:14:19,455 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:14:19,457 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:14:49,460 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:14:49,895 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:14:49,896 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:15:19,899 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:15:20,101 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:15:20,103 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:15:50,106 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:15:50,571 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:15:50,572 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:16:20,576 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:16:20,750 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:16:20,751 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:16:50,754 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:16:50,986 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:16:50,987 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:32:53,753 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 2212 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 19:32:53,759 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: local
+2019-08-29 19:32:55,140 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 19:32:55,157 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 19:32:55,248 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 58ms. Found 0 repository interfaces.
+2019-08-29 19:32:56,590 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1028 (http)
+2019-08-29 19:32:56,657 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 19:32:56,658 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 19:32:57,190 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 19:32:57,191 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 3352 ms
+2019-08-29 19:32:57,658 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 19:32:57,663 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 19:32:58,545 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 19:32:59,125 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:32:59,237 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1028 (http) with context path ''
+2019-08-29 19:32:59,243 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 6.267 seconds (JVM running for 9.469)
+2019-08-29 19:33:00,444 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:33:00,485 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 19:33:00,562 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#45673f68:0/SimpleConnection@34999773 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 57111]
+2019-08-29 19:33:00,671 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:33:30,674 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:33:30,928 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:33:30,933 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:34:00,941 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:34:01,646 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:34:01,647 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:34:31,650 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:34:31,870 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:34:31,876 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:35:01,879 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:35:02,371 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:35:02,373 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:35:32,376 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:35:32,590 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:35:32,593 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:36:02,595 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:36:02,914 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:36:02,916 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:36:32,918 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:36:33,102 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:36:33,103 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:37:03,107 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:37:03,386 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:37:03,388 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 19:49:04,601 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 5840 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 19:49:04,611 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: local
+2019-08-29 19:49:06,825 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 19:49:06,832 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 19:49:06,946 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 80ms. Found 0 repository interfaces.
+2019-08-29 19:49:09,721 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 1028 (http)
+2019-08-29 19:49:09,811 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 19:49:09,812 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 19:49:11,023 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 19:49:11,026 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 6252 ms
+2019-08-29 19:49:11,639 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 19:49:11,642 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 19:49:21,621 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 19:49:23,356 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 19:49:23,593 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 1028 (http) with context path ''
+2019-08-29 19:49:23,607 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 20.459 seconds (JVM running for 32.994)
+2019-08-29 19:49:25,041 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 19:49:25,113 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 19:49:25,196 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#7180e701:0/SimpleConnection@65b8aa4d [delegate=amqp://admin@106.10.51.123:5672/, localPort= 57955]
+2019-08-29 19:49:25,625 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 20:19:59,001 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 5688 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 20:19:59,015 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: server
+2019-08-29 20:20:00,361 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 20:20:00,364 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 20:20:00,442 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 56ms. Found 0 repository interfaces.
+2019-08-29 20:20:01,332 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2019-08-29 20:20:01,368 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 20:20:01,369 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 20:20:01,784 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 20:20:01,785 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 2680 ms
+2019-08-29 20:20:02,149 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 20:20:02,151 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 20:33:37,126 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 4120 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 20:33:37,132 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: server
+2019-08-29 20:33:38,329 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 20:33:38,334 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 20:33:38,413 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 55ms. Found 0 repository interfaces.
+2019-08-29 20:33:39,242 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2019-08-29 20:33:39,276 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 20:33:39,277 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 20:33:39,653 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 20:33:39,653 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 2444 ms
+2019-08-29 20:33:40,003 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 20:33:40,005 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 20:49:20,055 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 10040 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 20:49:20,060 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: server
+2019-08-29 20:49:21,176 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 20:49:21,180 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 20:49:21,254 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 57ms. Found 0 repository interfaces.
+2019-08-29 20:49:22,039 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2019-08-29 20:49:22,071 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 20:49:22,072 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 20:49:22,492 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 20:49:22,492 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 2361 ms
+2019-08-29 20:49:22,776 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 20:49:22,778 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 20:49:23,510 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
+2019-08-29 20:49:24,246 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create Start  View the current game
+2019-08-29 20:49:24,351 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2019-08-29 20:49:24,359 INFO com.example.loldashboard.LoldashboardApplication [main] Started LoldashboardApplication in 5.05 seconds (JVM running for 8.101)
+2019-08-29 20:49:25,307 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Call Api Scheduled Number of data called: 5
+2019-08-29 20:49:25,380 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Attempting to connect to: [106.10.51.123:5672]
+2019-08-29 20:49:25,453 INFO org.springframework.amqp.rabbit.connection.CachingConnectionFactory [pool-3-thread-1] Created new connection: rabbitConnectionFactory#712ca57b:0/SimpleConnection@70807453 [delegate=amqp://admin@106.10.51.123:5672/, localPort= 50330]
+2019-08-29 20:49:25,537 INFO com.example.loldashboard.service.GamesSender [pool-3-thread-1] Game Data Create end rabbitMQ Sendered
+2019-08-29 20:51:36,141 INFO com.example.loldashboard.LoldashboardApplication [main] Starting LoldashboardApplication on AL00000052 with PID 16080 (C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard\build\classes\java\main started by USER in C:\LolDashBoard\teahwan.kim_2nd\lolDashBoard)
+2019-08-29 20:51:36,150 INFO com.example.loldashboard.LoldashboardApplication [main] The following profiles are active: server
+2019-08-29 20:51:37,419 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-08-29 20:51:37,424 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-08-29 20:51:37,509 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 55ms. Found 0 repository interfaces.
+2019-08-29 20:51:38,477 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2019-08-29 20:51:38,511 INFO org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+2019-08-29 20:51:38,511 INFO org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/9.0.22]
+2019-08-29 20:51:38,903 INFO org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+2019-08-29 20:51:38,904 INFO org.springframework.web.context.ContextLoader [main] Root WebApplicationContext: initialization completed in 2660 ms
+2019-08-29 20:51:39,150 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisTemplate start
+2019-08-29 20:51:39,152 INFO com.example.loldashboard.configuration.RedisConfiguration [main] RedisConnectionFactory start
+2019-08-29 20:51:39,963 INFO org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor [main] Initializing ExecutorService 'applicationTaskExecutor'
